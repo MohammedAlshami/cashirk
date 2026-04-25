@@ -1,21 +1,13 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-  useMotionValueEvent,
-} from 'framer-motion';
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from '@/compat/next-link';
 import Image from '@/compat/next-image';
 
 const EXPANDED_SECTIONS: Array<{ id: string; label: string; href?: string; image: string }> = [
   { id: 'home', label: 'Home', href: '/', image: '/landing/images/1/bg.png' },
 ];
-
-const SECTION_HEIGHT = 1500;
 
 const MAIN_IMAGE_URL =
   'https://images.unsplash.com/photo-1734772001763-d01925bd5734?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -25,10 +17,8 @@ const PARALLAX_HERO_IMAGES = [
   { src: '/landing/images/6-parallax-b.jpg', alt: 'Medical' },
 ];
 
-/** Nav overlay uses same images as hero (center + parallax) */
 const MENU_SCROLL_IMAGES = [MAIN_IMAGE_URL, PARALLAX_HERO_IMAGES[0].src, PARALLAX_HERO_IMAGES[1].src];
 
-/** Single image card with grain overlay for nav menu (same treatment as hero) */
 function NavMenuImageCard({ src }: { src: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
@@ -39,7 +29,6 @@ function NavMenuImageCard({ src }: { src: string }) {
   );
 }
 
-/** Very high grain overlay for the center hero image */
 function HighGrainOverlay({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -62,13 +51,13 @@ function HighGrainOverlay({ containerRef }: { containerRef: React.RefObject<HTML
       canvas.height = h;
       canvas.style.width = '100%';
       canvas.style.height = '100%';
-        const imageData = ctx.createImageData(w, h);
-        const data = imageData.data;
-        for (let i = 0; i < data.length; i += 4) {
-          const v = Math.random() * 255;
-          data[i] = data[i + 1] = data[i + 2] = v;
-          data[i + 3] = 10;
-        }
+      const imageData = ctx.createImageData(w, h);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const v = Math.random() * 255;
+        data[i] = data[i + 1] = data[i + 2] = v;
+        data[i + 3] = 10;
+      }
       ctx.putImageData(imageData, 0, 0);
     };
 
@@ -78,19 +67,19 @@ function HighGrainOverlay({ containerRef }: { containerRef: React.RefObject<HTML
       resize();
     }
     return () => ro?.disconnect();
-  }, []);
+  }, [containerRef]);
 
   return (
     <canvas
       ref={canvasRef}
       className="pointer-events-none absolute inset-0 h-full w-full z-[1]"
-        style={{
-          imageRendering: 'pixelated',
-          mixBlendMode: 'overlay',
-          opacity: 0.45,
-          maskImage: 'linear-gradient(to bottom, transparent 0%, black 22%, black 58%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 22%, black 58%, transparent 100%)',
-        }}
+      style={{
+        imageRendering: 'pixelated',
+        mixBlendMode: 'overlay',
+        opacity: 0.45,
+        maskImage: 'linear-gradient(to bottom, transparent 0%, black 22%, black 58%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 22%, black 58%, transparent 100%)',
+      }}
       aria-hidden
     />
   );
@@ -136,7 +125,6 @@ export const LandingNav = () => {
         </div>
       </header>
 
-      {/* Full-screen modal: images left (one column up, one down), text right */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -148,7 +136,6 @@ export const LandingNav = () => {
             transition={{ duration: 0.25 }}
           >
             <div className="flex h-full w-full flex-col lg:flex-row gap-8 lg:gap-16 px-4 sm:px-8 md:px-12 lg:px-16 pt-20 sm:pt-24 pb-8 overflow-hidden">
-              {/* Left: two image columns – full height, no margin above/below */}
               <div className="hidden lg:flex flex-1 gap-4 lg:gap-8 overflow-hidden min-h-0 -mt-20 sm:-mt-24 -mb-8">
                 <div className="flex-1 overflow-hidden relative">
                   <div className="absolute inset-0 -my-8 nav-menu-scroll-down">
@@ -170,7 +157,6 @@ export const LandingNav = () => {
                 </div>
               </div>
 
-              {/* Right: text links */}
               <div className="flex flex-1 items-center justify-center lg:justify-start">
                 <nav className="flex flex-col items-start gap-6 sm:gap-8 md:gap-10 lg:gap-12">
                   <div className="text-sm font-medium text-[#FFF7DD]/40 lg:text-base">Overview</div>
@@ -218,14 +204,10 @@ export const LandingNav = () => {
 
 const Hero = () => {
   return (
-    <div
-      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
-      className="relative w-full"
-    >
+    <section className="relative h-screen w-full overflow-hidden">
       <CenterImage />
-      {/* IMPER text centered over the main image – starts very small, grows with scroll */}
       <div className="pointer-events-none absolute inset-0 z-10 flex justify-center">
-        <div className="sticky top-0 h-screen flex items-center justify-center px-6">
+        <div className="flex h-full items-center justify-center px-6">
           <motion.div className="text-right w-fit">
             <h1
               className="font-bold tracking-tight leading-none mb-1 sm:mb-2 whitespace-nowrap select-none"
@@ -247,28 +229,19 @@ const Hero = () => {
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-[#0E100F]/0 to-[#0E100F]" />
-    </div>
+    </section>
   );
 };
 
 const CenterImage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-
-  const backgroundSize = 'cover';
-  const opacity = useTransform(
-    scrollY,
-    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
-    [1, 0]
-  );
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      className="sticky top-0 h-screen w-full relative"
+      className="absolute inset-0 w-full h-full relative"
       style={{
-        backgroundSize,
-        opacity,
+        backgroundSize: 'cover',
         backgroundImage: `url(${MAIN_IMAGE_URL})`,
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -278,6 +251,6 @@ const CenterImage = () => {
     >
       <div className="absolute inset-0 bg-[#0E100F]/60" aria-hidden />
       <HighGrainOverlay containerRef={containerRef} />
-    </motion.div>
+    </div>
   );
 };
