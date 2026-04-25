@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   motion,
-  useMotionTemplate,
   useScroll,
   useTransform,
   AnimatePresence,
@@ -218,9 +217,6 @@ export const LandingNav = () => {
 };
 
 const Hero = () => {
-  const { scrollY } = useScroll();
-  const textScale = useTransform(scrollY, [0, 1200], [0.06, 1]);
-
   return (
     <div
       style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
@@ -230,7 +226,7 @@ const Hero = () => {
       {/* IMPER text centered over the main image – starts very small, grows with scroll */}
       <div className="pointer-events-none absolute inset-0 z-10 flex justify-center">
         <div className="sticky top-0 h-screen flex items-center justify-center px-6">
-          <motion.div className="text-right w-fit" style={{ scale: textScale }}>
+          <motion.div className="text-right w-fit">
             <h1
               className="font-bold tracking-tight leading-none mb-1 sm:mb-2 whitespace-nowrap select-none"
               style={{
@@ -259,17 +255,7 @@ const CenterImage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
 
-  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
-  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
-
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const backgroundSize = useTransform(
-    scrollY,
-    [0, 1200],
-    ['32%', '100%']
-  );
-  const grainScale = useTransform(scrollY, [0, 1200], [0.32, 1]);
+  const backgroundSize = 'cover';
   const opacity = useTransform(
     scrollY,
     [SECTION_HEIGHT, SECTION_HEIGHT + 500],
@@ -281,7 +267,6 @@ const CenterImage = () => {
       ref={containerRef}
       className="sticky top-0 h-screen w-full relative"
       style={{
-        clipPath,
         backgroundSize,
         opacity,
         backgroundImage: `url(${MAIN_IMAGE_URL})`,
@@ -292,12 +277,7 @@ const CenterImage = () => {
       }}
     >
       <div className="absolute inset-0 bg-[#0E100F]/60" aria-hidden />
-      <motion.div
-        className="absolute inset-0 origin-center"
-        style={{ scale: grainScale }}
-      >
-        <HighGrainOverlay containerRef={containerRef} />
-      </motion.div>
+      <HighGrainOverlay containerRef={containerRef} />
     </motion.div>
   );
 };
