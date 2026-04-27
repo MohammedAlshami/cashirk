@@ -3,44 +3,44 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import {
-  Users,
-  Boxes,
-  BriefcaseBusiness,
-  Warehouse,
-  MessagesSquare,
+  Mic,
+  BookOpenCheck,
+  Timer,
+  Plug,
+  LineChart,
   type LucideIcon,
 } from 'lucide-react';
 
 const SOLUTIONS: { title: string; description: string; icon: LucideIcon }[] = [
   {
-    title: 'Customer management',
+    title: 'طلب صوتي طبيعي',
     description:
-      'Keep customer records, vehicle details, service history, and account information organized in one system.',
-    icon: Users,
+      'ذكاء اصطناعي محادث عند مكبر الصوت يعيد الصياغة والتوضيح ويتعامل مع الطلبات الخاصة ليشعر الضيف أنه مُسمَع من دون إبطاء الطابور.',
+    icon: Mic,
   },
   {
-    title: 'Asset management',
+    title: 'حوار يفهم القائمة',
     description:
-      'Track workshop assets, equipment, and tools with clear ownership, status, and maintenance visibility.',
-    icon: Boxes,
+      'يتوافق مع أوقات اليوم والعروض المؤقتة وقائمة التوقف ليبقى اقتراح البيع الإضافي وتنبيهات الحساسية دقيقة ومطابقة للسياسات.',
+    icon: BookOpenCheck,
   },
   {
-    title: 'Employee management',
+    title: 'إنتاجية في الذروة',
     description:
-      'Manage employees, roles, assignments, and performance in a structured workspace for daily operations.',
-    icon: BriefcaseBusiness,
+      'يحافظ على استقرار استلام الطلبات عند اندفاع الزبائن ويقلل سوء الفهم ويحرر الطاقم ليركز على التسليم والضيافة.',
+    icon: Timer,
   },
   {
-    title: 'Inventory management',
+    title: 'تسليم لنقطة البيع والمطبخ',
     description:
-      'Monitor stock levels, parts usage, reorders, and workshop inventory movement with better control.',
-    icon: Warehouse,
+      'تذاكر منظمة تتدفق إلى نقطة البيع أو نظام عرض المطبخ مع بقاء التعديلات كما هي ليتحرك الطابور ويبقى الممر هادئا.',
+    icon: Plug,
   },
   {
-    title: 'Client communication and invoicing',
+    title: 'رؤى أداء الممر',
     description:
-      'Handle client updates, billing, and invoices from one place to keep communication and cash flow aligned.',
-    icon: MessagesSquare,
+      'راقب زمن المعالجة وتحويل العروض المقترحة ومعدلات التسليم لضبط النصوص والتشغيل والعروض وفق بيانات واضحة.',
+    icon: LineChart,
   },
 ];
 
@@ -69,9 +69,9 @@ export default function MistFeaturesFive() {
         <div className="container mx-auto w-full px-4 sm:px-6 lg:px-8">
           <h2
             className="text-balance text-2xl font-semibold md:text-3xl lg:text-4xl text-[#FFF7DD] mb-10 md:mb-12"
-            style={{ fontFamily: '"Mori", sans-serif' }}
+            style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
           >
-            What the solution includes
+            ما الذي يشمله الحل
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2">
@@ -83,13 +83,13 @@ export default function MistFeaturesFive() {
               return (
                 <div
                   key={i}
-                  className={`p-6 md:p-8 border-white/25 border-dashed ${!isSecondCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''}`}
+                  className={`p-6 md:p-8 border-white/25 border-dashed ${!isSecondCol ? 'border-e' : ''} ${!isLastRow ? 'border-b' : ''}`}
                 >
                   <div className="flex items-center gap-2">
                     <Icon className="size-5 shrink-0 text-[#FFF7DD]" />
                     <h3
                       className="text-lg font-semibold text-[#FFF7DD]"
-                      style={{ fontFamily: '"Mori", sans-serif' }}
+                      style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                     >
                       {item.title}
                     </h3>

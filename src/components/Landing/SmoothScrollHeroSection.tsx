@@ -4,17 +4,18 @@ import React, { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from '@/compat/next-link';
 import Image from '@/compat/next-image';
+import { ContainerScroll } from '@/components/ui/container-scroll-animation';
 
 const EXPANDED_SECTIONS: Array<{ id: string; label: string; href?: string; image: string }> = [
-  { id: 'home', label: 'Home', href: '/', image: '/landing/images/1/bg.png' },
+  { id: 'home', label: 'الرئيسية', href: '/', image: '/landing/images/1/bg.png' },
 ];
 
 const MAIN_IMAGE_URL =
-  'https://images.unsplash.com/photo-1734772001763-d01925bd5734?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 const PARALLAX_HERO_IMAGES = [
-  { src: '/landing/images/5-parallax-a.jpg', alt: 'Banking' },
-  { src: '/landing/images/6-parallax-b.jpg', alt: 'Medical' },
+  { src: '/landing/images/5-parallax-a.jpg', alt: 'خدمة درايف ثرو' },
+  { src: '/landing/images/6-parallax-b.jpg', alt: 'مطعم خدمة سريعة' },
 ];
 
 const MENU_SCROLL_IMAGES = [MAIN_IMAGE_URL, PARALLAX_HERO_IMAGES[0].src, PARALLAX_HERO_IMAGES[1].src];
@@ -114,12 +115,18 @@ export const LandingNav = () => {
               <Link href="/" className="block">
                 <h2
                   className="flex text-xl font-bold tracking-tight transition-opacity hover:opacity-90"
-                  style={{ fontFamily: '"Mori", sans-serif' }}
+                  style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
-                  Imper
+                  كاشيرك
                 </h2>
               </Link>
-              <div className="size-10 shrink-0" aria-hidden />
+              <Link
+                href="/demo"
+                className="shrink-0 text-sm font-medium text-[#FFF7DD]/70 transition-colors hover:text-[#FFF7DD]"
+                style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
+              >
+                تجربة القائمة
+              </Link>
             </div>
           </motion.nav>
         </div>
@@ -159,13 +166,13 @@ export const LandingNav = () => {
 
               <div className="flex flex-1 items-center justify-center lg:justify-start">
                 <nav className="flex flex-col items-start gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-                  <div className="text-sm font-medium text-[#FFF7DD]/40 lg:text-base">Overview</div>
+                  <div className="text-sm font-medium text-[#FFF7DD]/40 lg:text-base">نظرة عامة</div>
                   {EXPANDED_SECTIONS.map((section) => (
                     <Link
                       key={section.id}
                       href={section.href ?? `/#${section.id}`}
                       className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FFF7DD] tracking-tight transition-colors hover:text-[#FFF7DD]/80"
-                      style={{ fontFamily: '"Mori", sans-serif' }}
+                      style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                       onClick={() => setIsExpanded(false)}
                     >
                       {section.label}
@@ -204,53 +211,41 @@ export const LandingNav = () => {
 
 const Hero = () => {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <CenterImage />
-      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center">
-        <div className="flex h-full items-center justify-center px-6">
-          <motion.div className="text-right w-fit">
+    <section className="relative w-full overflow-hidden bg-[#0E100F] pt-24 sm:pt-28">
+      <ContainerScroll
+        titleComponent={
+          <>
             <h1
-              className="font-bold tracking-tight leading-none mb-1 sm:mb-2 whitespace-nowrap select-none"
+              className="mb-2 select-none font-bold leading-none tracking-tight text-[#FFF7DD] sm:mb-3"
               style={{
-                fontFamily: '"Mori", sans-serif',
-                fontSize: 'clamp(48px, 11vw, 220px)',
-                color: '#FFF7DD',
+                fontFamily: '"IBM Plex Sans Arabic", sans-serif',
+                fontSize: 'clamp(40px, 9vw, 140px)',
               }}
             >
-              IMPER
+              كاشيرك
             </h1>
             <p
-              className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-medium tracking-wide whitespace-nowrap uppercase"
-              style={{ fontFamily: '"Mori", sans-serif', color: '#FFF7DD' }}
+              className="mx-auto mb-2 max-w-2xl text-balance text-sm font-medium text-[#FFF7DD] sm:mb-3 sm:text-base md:text-lg lg:text-xl"
+              style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
             >
-              Workshop management system
+              وكيل صوتي بالذكاء الاصطناعي لخدمة السيارات (درايف ثرو)
             </p>
-          </motion.div>
+          </>
+        }
+      >
+        <div className="relative h-full min-h-[12rem] w-full overflow-hidden rounded-2xl">
+          <img
+            src={MAIN_IMAGE_URL}
+            alt=""
+            width={1400}
+            height={720}
+            className="h-full w-full object-cover object-center"
+            draggable={false}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[#0E100F]/50" aria-hidden />
         </div>
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-[#0E100F]/0 to-[#0E100F]" />
+      </ContainerScroll>
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-[#0E100F]" />
     </section>
-  );
-};
-
-const CenterImage = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 w-full h-full relative"
-      style={{
-        backgroundSize: 'cover',
-        backgroundImage: `url(${MAIN_IMAGE_URL})`,
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        maskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 50%, transparent 100%)',
-        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 50%, transparent 100%)',
-      }}
-    >
-      <div className="absolute inset-0 bg-[#0E100F]/60" aria-hidden />
-      <HighGrainOverlay containerRef={containerRef} />
-    </div>
   );
 };

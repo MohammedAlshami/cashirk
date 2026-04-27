@@ -34,7 +34,7 @@ export default function Footer() {
         style={{
           minHeight: '800px',
           backgroundColor: BG,
-          fontFamily: '"Mori", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: '"IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif',
         }}
       >
         <div className="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-8 z-10 py-24 md:py-32">
@@ -42,12 +42,12 @@ export default function Footer() {
             <h2
               className="font-bold tracking-tight leading-none whitespace-nowrap text-center min-h-[1em]"
               style={{
-                fontFamily: '"Mori", sans-serif',
+                fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontSize: 'clamp(60px, 15vw, 300px)',
                 color: TEXT,
               }}
             >
-              Imper
+              كاشيرك
             </h2>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function Footer() {
                 className="font-bold text-lg md:text-xl uppercase tracking-wide"
                 style={{ color: TEXT }}
               >
-                For Inquiries Contact
+                للاستفسارات تواصل معنا
               </h4>
               <a
                 href="mailto:mshami2021@gmail.com"
@@ -73,9 +73,9 @@ export default function Footer() {
 
           <div
             className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10 text-xs sm:text-sm"
-            style={{ color: 'rgba(255, 247, 221, 0.6)', fontFamily: '"Mori", sans-serif' }}
+            style={{ color: 'rgba(255, 247, 221, 0.6)', fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
           >
-            <p>Â© {new Date().getFullYear()} Imper Â· All Rights Reserved</p>
+            <p>© {new Date().getFullYear()} كاشيرك · جميع الحقوق محفوظة</p>
           </div>
         </div>
       </motion.footer>

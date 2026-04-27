@@ -32,9 +32,9 @@ export default function CTASection() {
       target="_blank"
       rel="noopener noreferrer"
       className={CTA_BUTTON_VARIANT_CLASSES[ctaVariant]}
-      style={{ fontFamily: '"Mori", sans-serif' }}
+      style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
     >
-      SCHEDULE DEMO
+      احجز عرضا توضيحيا
     </a>
   );
 
@@ -54,11 +54,11 @@ export default function CTASection() {
             <h2
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none tracking-tight text-[#FFF7DD]"
               style={{
-                fontFamily: '"Mori", sans-serif',
+                fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 letterSpacing: '-0.03em',
               }}
             >
-              <span className="block">READY TO TRANSFORM YOUR WORK?</span>
+              <span className="block">هل أنت مستعد لترقية درايف ثرو لديك؟</span>
             </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 md:gap-6 flex-shrink-0">

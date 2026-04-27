@@ -1,14 +1,15 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "imper-marketing",
+  "name": "cashirk",
   "compatibility_date": "2026-04-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  // Zone routes (not Workers Custom Domains): avoids API 100117 when apex/www
+  // already have A/CNAME/R2-style records Cloudflare will not auto-replace.
+  "workers_dev": true,
   "routes": [
-    {
-      "pattern": "imper.app",
-      "custom_domain": true
-    }
+    { "pattern": "kashirak.store/*", "zone_name": "kashirak.store" },
+    { "pattern": "www.kashirak.store/*", "zone_name": "kashirak.store" }
   ],
   "observability": {
     "enabled": true

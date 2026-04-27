@@ -5,9 +5,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import ScrollAnimationWrapper from "@/components/Landing/ScrollAnimationWrapper";
 
 const QUOTE_TEXT =
-  "Imper is a workshop management system designed to help workshop owners manage employees, track KPIs, control stock inventory, oversee assets, and handle client communications and invoicing in one place.";
+  "كاشيرك وكيل صوتي بالذكاء الاصطناعي لممرات درايف ثرو يجيب على مكبر الصوت ويفهم الطلبات الطبيعية مع التعديلات والاستبدالات ويؤكد الإجماليات ويمرر تذاكر منظمة إلى نقطة البيع أو شاشة المطبخ ليبقى الطاقم مركزا على الطعام والخدمة.";
 
-const SUBTITLE = "Workshop management system for operations, inventory, assets, and client billing";
+const SUBTITLE =
+  "ذكاء اصطناعي صوتي لممرات درايف ثرو — سريع ودقيق ومتسق مع علامتك عند ذروة الطلب";
 
 export default function ImageGridSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -29,9 +30,9 @@ export default function ImageGridSection() {
         <ScrollAnimationWrapper>
           <motion.div className="relative" style={{ opacity: contentOpacity, y: contentY }}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[60vh]">
-              <div className="lg:border-r border-white/10 lg:pr-12">
+              <div className="lg:border-e border-white/10 lg:pe-12">
                 <p className="font-display-hero text-7xl sm:text-8xl lg:text-[8.75rem] font-extrabold tracking-tighter leading-[0.9] text-[#FFF7DD]">
-                  What we do
+                  ماذا نفعل
                 </p>
               </div>
               <div>

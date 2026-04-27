@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap");
+
+.landing-page[dir="rtl"],
+.landing-page[dir="rtl"] h1,
+.landing-page[dir="rtl"] h2,
+.landing-page[dir="rtl"] h3,
+.landing-page[dir="rtl"] h4,
+.landing-page[dir="rtl"] h5,
+.landing-page[dir="rtl"] h6 {
+  font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}

@@ -55,7 +55,7 @@ export default function Navbar() {
                 {!isExpanded && (
                   <Link href="/" className="block">
                     <h2 className="flex text-xl font-medium leading-[1.2105263158] tracking-[0.012em] transition-opacity hover:opacity-90">
-                      Imper
+                      Cashirk
                     </h2>
                   </Link>
                 )}
@@ -76,7 +76,7 @@ export default function Navbar() {
                   <div className="mb-10 min-h-10 border-b border-foreground/10 opacity-100">
                     <div className="flex w-full flex-col justify-between gap-3 lg:flex-row">
                       <h2 className="text-3xl font-semibold leading-[1.2105263158] text-[#FFF7DD] lg:text-5xl">
-                        Imper
+                        Cashirk
                       </h2>
                     </div>
                   </div>

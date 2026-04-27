@@ -24,8 +24,11 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       ...seo({
-        title: 'Imper',
-        description: 'Imper workshop management system.',
+        title: 'Cashirk — Drive-thru voice AI',
+        description:
+          'Cashirk is an AI voice agent for drive-thru lanes: natural ordering, menu-aware conversations, and POS-ready handoff.',
+        keywords:
+          'drive-thru AI, voice agent, restaurant AI, QSR automation, order taking, speaker post, Cashirk',
       }),
     ],
     links: [
@@ -60,8 +63,8 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = router.state.location.pathname
-  const isLanding = pathname === '/'
-  const showDefaultNavbar = !isLanding
+  const isFullBleed = pathname === '/' || pathname === '/demo'
+  const showDefaultNavbar = !isFullBleed
   return (
     <html>
       <head>

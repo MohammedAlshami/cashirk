@@ -9,11 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiEmpireSushiSearchRouteImport } from './routes/api/empire-sushi.search'
 import { Route as ApiEmpireSushiMenuItemsRouteImport } from './routes/api/empire-sushi.menu-items'
 import { Route as ApiEmpireSushiFinancialsRouteImport } from './routes/api/empire-sushi.financials'
+import { Route as ApiElevenlabsConversationTokenRouteImport } from './routes/api/elevenlabs.conversation-token'
 
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -35,15 +42,25 @@ const ApiEmpireSushiFinancialsRoute =
     path: '/api/empire-sushi/financials',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiElevenlabsConversationTokenRoute =
+  ApiElevenlabsConversationTokenRouteImport.update({
+    id: '/api/elevenlabs/conversation-token',
+    path: '/api/elevenlabs/conversation-token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
+  '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
   '/api/empire-sushi/search': typeof ApiEmpireSushiSearchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
+  '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
   '/api/empire-sushi/search': typeof ApiEmpireSushiSearchRoute
@@ -51,6 +68,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
+  '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
   '/api/empire-sushi/search': typeof ApiEmpireSushiSearchRoute
@@ -59,18 +78,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/demo'
+    | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
     | '/api/empire-sushi/search'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/demo'
+    | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
     | '/api/empire-sushi/search'
   id:
     | '__root__'
     | '/'
+    | '/demo'
+    | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
     | '/api/empire-sushi/search'
@@ -78,6 +103,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DemoRoute: typeof DemoRoute
+  ApiElevenlabsConversationTokenRoute: typeof ApiElevenlabsConversationTokenRoute
   ApiEmpireSushiFinancialsRoute: typeof ApiEmpireSushiFinancialsRoute
   ApiEmpireSushiMenuItemsRoute: typeof ApiEmpireSushiMenuItemsRoute
   ApiEmpireSushiSearchRoute: typeof ApiEmpireSushiSearchRoute
@@ -85,6 +112,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -113,11 +147,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiEmpireSushiFinancialsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/elevenlabs/conversation-token': {
+      id: '/api/elevenlabs/conversation-token'
+      path: '/api/elevenlabs/conversation-token'
+      fullPath: '/api/elevenlabs/conversation-token'
+      preLoaderRoute: typeof ApiElevenlabsConversationTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DemoRoute: DemoRoute,
+  ApiElevenlabsConversationTokenRoute: ApiElevenlabsConversationTokenRoute,
   ApiEmpireSushiFinancialsRoute: ApiEmpireSushiFinancialsRoute,
   ApiEmpireSushiMenuItemsRoute: ApiEmpireSushiMenuItemsRoute,
   ApiEmpireSushiSearchRoute: ApiEmpireSushiSearchRoute,

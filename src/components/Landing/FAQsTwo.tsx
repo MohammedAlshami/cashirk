@@ -27,33 +27,33 @@ export default function FAQsTwo() {
   const faqItems = [
     {
       id: 'item-1',
-      question: 'What does Imper do?',
+      question: 'ما هو كاشيرك؟',
       answer:
-        'Imper is a workshop management system built to help workshop owners manage customers, employees, assets, inventory, and invoicing from one place.',
+        'كاشيرك وكيل صوتي بالذكاء الاصطناعي لممرات درايف ثرو يستمع ويتحدث مثل موظف تدريب ماهر ويلتقط التعديلات ويمرر التذاكر المكتملة إلى نقطة البيع أو شاشة المطبخ.',
     },
     {
       id: 'item-2',
-      question: 'What features are included?',
+      question: 'كيف يبدو للزبائن؟',
       answer:
-        'The platform covers customer management, employee management, asset tracking, inventory control, job coordination, communication, and invoicing so daily operations stay organized.',
+        'يستخدم الوكيل كلاما منخفض التأخير وبصياغة آمنة للعلامة بحيث تبدو التحيات وعروض البيع الإضافي والتأكيدات طبيعية ومتسقة وسهلة المتابعة في الممر الصاخب.',
     },
     {
       id: 'item-3',
-      question: 'Can the system be tailored to our workflow?',
+      question: 'هل يمكنه اتباع قائمتنا وسياساتنا؟',
       answer:
-        'Yes. Imper is designed to adapt to how your workshop operates, so the system can support your processes, team structure, and operational needs.',
+        'نعم. نُزامن القائمة والأسعار وأوقات اليوم وقواعد الامتثال ليحترم الوكيل العناصر المتوقفة والحساسيات والعروض كما يفعل عضو طاقم مدرب جيدا.',
     },
     {
       id: 'item-4',
-      question: 'Does Imper help with client communication and billing?',
+      question: 'ماذا يحدث عندما يحتاج الزبون إلى إنسان؟',
       answer:
-        'Yes. You can manage client communication and invoicing in one place, making it easier to keep customers updated and maintain clear billing records.',
+        'يمكن تصعيد الطلبات الحساسة أو المعقدة بسلاسة إلى عضو يرتدي سماعة مع الحفاظ على السياق لكي لا يكرر الزبون نفسه.',
     },
     {
       id: 'item-5',
-      question: 'What kind of workshop is Imper for?',
+      question: 'لمن صُمم كاشيرك؟',
       answer:
-        'Imper is suited for workshop owners who need a professional system to manage operations, assets, stock, employees, and client relationships in one platform.',
+        'لعلامات الوجبات السريعة والمطاعم غير الرسمية وللمشغلين متعددي الفروع وللمجموعات الامتيازية التي تريد أتمتة صوتية موثوقة عند المكبر من دون المساس بدقة التذكرة.',
     },
   ];
 
@@ -71,14 +71,14 @@ export default function FAQsTwo() {
         <div className="mx-auto max-w-xl text-center">
           <h2
             className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl text-[#FFF7DD]"
-            style={{ fontFamily: '"Mori", sans-serif' }}
+            style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
           >
-            Solution FAQs
+            الأسئلة الشائعة
           </h2>
           <p
             className="mt-4 text-balance text-[#FFF7DD]/90"
           >
-            Quick answers about the workshop management system and how it supports your operations.
+            إجابات مختصرة عن الوكيل الصوتي لممرات درايف ثرو وكيف يدعم ممراتك وطاقمك.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function FAQsTwo() {
               >
                 <AccordionTrigger
                   className="cursor-pointer text-base hover:no-underline text-[#FFF7DD]"
-                  style={{ fontFamily: '"Mori", sans-serif' }}
+                  style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
                   {item.question}
                 </AccordionTrigger>
@@ -114,12 +114,12 @@ export default function FAQsTwo() {
           <p
             className="mt-6 px-6 md:px-8 text-[#FFF7DD]/90 text-[0.9375rem]"
           >
-            Can&apos;t find what you&apos;re looking for?{' '}
+            لم تجد ما تبحث عنه؟{' '}
             <Link
               href="/#contact"
               className="underline underline-offset-4"
             >
-              Contact us
+              تواصل معنا
             </Link>
           </p>
         </div>

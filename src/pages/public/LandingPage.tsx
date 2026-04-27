@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
+import "@/styles/landing-ar.css";
 import { ReactLenis } from "lenis/react";
 import { SmoothScrollHeroContent } from "@/components/Landing/SmoothScrollHeroSection";
 import ImageGridSection from "@/components/Landing/ImageGridSection";
 import ContentSection from "@/components/Landing/ContentSection";
 import TextBoxRevealSection from "@/components/Landing/TextBoxRevealSection";
 import MistFeaturesFive from "@/components/Landing/MistFeaturesFive";
+import IntegrationsSection from "@/components/Landing/IntegrationsSection";
 import MistFeaturesSix from "@/components/Landing/MistFeaturesSix";
 import MistFeaturesEleven from "@/components/Landing/MistFeaturesEleven";
 import FAQsTwo from "@/components/Landing/FAQsTwo";
@@ -19,6 +21,8 @@ export function LandingPage() {
     <LandingVariationProvider>
       <div
         className="landing-page min-h-screen relative text-[#FFF7DD]"
+        dir="rtl"
+        lang="ar"
         style={{ backgroundColor: '#0E100F' }}
       >
         <ReactLenis root options={{ lerp: 0.05 }}>
@@ -39,6 +43,10 @@ export function LandingPage() {
 
             <div id="solutions">
               <MistFeaturesFive />
+            </div>
+
+            <div id="integrations">
+              <IntegrationsSection />
             </div>
 
             <div id="mist-6">

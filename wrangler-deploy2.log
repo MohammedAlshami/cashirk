@@ -1,0 +1,41 @@
+
+ ⛅️ wrangler 4.85.0
+───────────────────
+Using redirected Wrangler configuration.
+ - Configuration being used: "dist\server\wrangler.json"
+ - Original user's configuration: "wrangler.jsonc"
+ - Deploy configuration file: ".wrangler\deploy\config.json"
+Attaching additional modules:
+┌───────────────────────────────────────────────────────┬──────┬─────────────┐
+│ Name                                                  │ Type │ Size        │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/index-DzVopQk2.js                              │ esm  │ 486.23 KiB  │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/router-Bin4alNp.js                             │ esm  │ 1095.30 KiB │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/start-HYkvq4Ni.js                              │ esm  │ 0.06 KiB    │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/worker-entry-Bxk7aNIZ.js                       │ esm  │ 701.91 KiB  │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/_tanstack-start-manifest_v-D2pbdkOJ.js         │ esm  │ 0.63 KiB    │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ assets/__23tanstack-start-plugin-adapters-Cwee5PKy.js │ esm  │ 0.13 KiB    │
+├───────────────────────────────────────────────────────┼──────┼─────────────┤
+│ Total (6 modules)                                     │      │ 2284.25 KiB │
+└───────────────────────────────────────────────────────┴──────┴─────────────┘
+🌀 Building list of assets...
+✨ Read 78 files from the assets directory C:\Users\USER\Desktop\Work\Freelance\cashirk\dist\client
+🌀 Starting asset upload...
+No updated asset files to upload. Proceeding with deployment...
+Total Upload: 2284.44 KiB / gzip: 498.14 KiB
+Worker Startup Time: 17 ms
+Uploaded cashirk (15.07 sec)
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mA request to the Cloudflare API (/accounts/e2f9e8d1485dce72d1a18307ed32a47a/workers/scripts/cashirk/domains/records) failed.[0m
+
+  Hostname 'kashirak.store' already has externally managed DNS records (A, CNAME, etc). Either delete them, try a different hostname, or use the option 'override_existing_dns_record' to override. [code: 100117]
+  
+  If you think this is a bug, please open an issue at: [4mhttps://github.com/cloudflare/workers-sdk/issues/new/choose[0m
+
+
+🪵  Logs were written to "C:\Users\USER\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-04-27_06-14-34_361.log"
