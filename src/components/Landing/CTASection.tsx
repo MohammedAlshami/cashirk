@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useLandingVariation } from './LandingVariationContext';
+import { useLandingLocale } from '@/i18n/LandingLocaleContext';
 import {
   CTA_BUTTON_VARIANT_CLASSES,
   CTA_BUTTON_WRAPPER_CLASS,
@@ -25,6 +26,7 @@ export default function CTASection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
   const { ctaVariant } = useLandingVariation();
+  const { messages } = useLandingLocale();
 
   const linkEl = (
     <a
@@ -32,9 +34,8 @@ export default function CTASection() {
       target="_blank"
       rel="noopener noreferrer"
       className={CTA_BUTTON_VARIANT_CLASSES[ctaVariant]}
-      style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
     >
-      احجز عرضا توضيحيا
+      {messages.cta.button}
     </a>
   );
 
@@ -54,11 +55,10 @@ export default function CTASection() {
             <h2
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none tracking-tight text-[#FFF7DD]"
               style={{
-                fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 letterSpacing: '-0.03em',
               }}
             >
-              <span className="block">هل أنت مستعد لترقية درايف ثرو لديك؟</span>
+              <span className="block">{messages.cta.title}</span>
             </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 md:gap-6 flex-shrink-0">

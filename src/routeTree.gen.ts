@@ -9,13 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DemoV2RouteImport } from './routes/demo-v2'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as ApiEmpireSushiSearchRouteImport } from './routes/api/empire-sushi.search'
 import { Route as ApiEmpireSushiMenuItemsRouteImport } from './routes/api/empire-sushi.menu-items'
 import { Route as ApiEmpireSushiFinancialsRouteImport } from './routes/api/empire-sushi.financials'
 import { Route as ApiElevenlabsConversationTokenRouteImport } from './routes/api/elevenlabs.conversation-token'
 
+const DemoV2Route = DemoV2RouteImport.update({
+  id: '/demo-v2',
+  path: '/demo-v2',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoRoute = DemoRouteImport.update({
   id: '/demo',
   path: '/demo',
@@ -24,6 +31,11 @@ const DemoRoute = DemoRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiEmpireSushiSearchRoute = ApiEmpireSushiSearchRouteImport.update({
@@ -52,6 +64,8 @@ const ApiElevenlabsConversationTokenRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/demo-v2': typeof DemoV2Route
+  '/en/': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
@@ -60,6 +74,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/demo-v2': typeof DemoV2Route
+  '/en': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
@@ -69,6 +85,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/demo-v2': typeof DemoV2Route
+  '/en/': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
   '/api/empire-sushi/menu-items': typeof ApiEmpireSushiMenuItemsRoute
@@ -79,6 +97,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/demo'
+    | '/demo-v2'
+    | '/en/'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
@@ -87,6 +107,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/demo'
+    | '/demo-v2'
+    | '/en'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
@@ -95,6 +117,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/demo'
+    | '/demo-v2'
+    | '/en/'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
     | '/api/empire-sushi/menu-items'
@@ -104,6 +128,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
+  DemoV2Route: typeof DemoV2Route
+  EnIndexRoute: typeof EnIndexRoute
   ApiElevenlabsConversationTokenRoute: typeof ApiElevenlabsConversationTokenRoute
   ApiEmpireSushiFinancialsRoute: typeof ApiEmpireSushiFinancialsRoute
   ApiEmpireSushiMenuItemsRoute: typeof ApiEmpireSushiMenuItemsRoute
@@ -112,6 +138,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/demo-v2': {
+      id: '/demo-v2'
+      path: '/demo-v2'
+      fullPath: '/demo-v2'
+      preLoaderRoute: typeof DemoV2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo': {
       id: '/demo'
       path: '/demo'
@@ -124,6 +157,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/empire-sushi/search': {
@@ -160,6 +200,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
+  DemoV2Route: DemoV2Route,
+  EnIndexRoute: EnIndexRoute,
   ApiElevenlabsConversationTokenRoute: ApiElevenlabsConversationTokenRoute,
   ApiEmpireSushiFinancialsRoute: ApiEmpireSushiFinancialsRoute,
   ApiEmpireSushiMenuItemsRoute: ApiEmpireSushiMenuItemsRoute,

@@ -5,10 +5,9 @@ import {
   createRootRoute,
   useRouter,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import * as React from 'react'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
-import { NotFound } from '~/components/NotFound'
+import { RedirectToHome } from '~/components/RedirectToHome'
 import Navbar from '~/components/Navbar'
 import appCss from '~/styles/app.css?url'
 import { seo } from '~/utils/seo'
@@ -56,14 +55,17 @@ export const Route = createRootRoute({
     scripts: [],
   }),
   errorComponent: DefaultCatchBoundary,
-  notFoundComponent: () => <NotFound />,
+  notFoundComponent: RedirectToHome,
   shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = router.state.location.pathname
-  const isFullBleed = pathname === '/' || pathname === '/demo'
+  const isLandingLocale =
+    pathname === '/' || pathname === '/en' || pathname === '/en/'
+  const isFullBleed =
+    isLandingLocale || pathname === '/demo' || pathname === '/demo-v2'
   const showDefaultNavbar = !isFullBleed
   return (
     <html>
@@ -76,7 +78,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <div className={`min-h-screen bg-[#0E100F] ${showDefaultNavbar ? 'pt-16' : ''}`}>
             {children}
           </div>
-          <TanStackRouterDevtools position="bottom-right" />
           <Scripts />
         </>
       </body>

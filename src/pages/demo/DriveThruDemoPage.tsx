@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  ConversationProvider,
-  useConversation,
-  type ConversationStatus,
-} from "@elevenlabs/react";
-import React, { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ConversationProvider } from "@elevenlabs/react";
+import React from "react";
 import "@/styles/landing-ar.css";
-import Link from "@/compat/next-link";
-import type { AgentState } from "@/components/demo/Orb";
-
-const Orb = lazy(() => import("@/components/demo/Orb").then((m) => ({ default: m.Orb })));
+import { DemoLogoBar } from "@/components/demo/DemoLogoBar";
+import { DriveThruOrb } from "@/components/demo/DriveThruOrb";
+import { useDriveThruVoiceDemo } from "@/pages/demo/useDriveThruVoiceDemo";
 
 const SAR_IMG = "/demo/saudi-riyal-symbol.svg";
 
@@ -33,7 +28,6 @@ function MoneyAmount({
 }: {
   amount: string;
   className?: string;
-  /** Dark riyal glyph on light backgrounds (e.g. white receipt test). */
   darkSymbol?: boolean;
 }) {
   return (
@@ -44,14 +38,14 @@ function MoneyAmount({
   );
 }
 
-const PLACEHOLDER_IMG =
-  "https://images.deliveryhero.io/image/global-menu-service/HS_SA/vendor/136682/product/e0c22adb-e82f-470f-9878-bb4d1ac096e1.jpg?width=1024&quality=100&webp=true";
-
-const RESTAURANT_LOGO =
-  "https://daratalqahwa.com/wp-content/uploads/2024/03/logo-placement-01-1.png";
+const DEMO_PRODUCT_IMAGES = {
+  latte:
+    "https://upload.wikimedia.org/wikipedia/commons/d/d8/Caffe_Latte_at_Pulse_Cafe.jpg",
+  croissant:
+    "https://upload.wikimedia.org/wikipedia/commons/2/2a/Croissant-Petr_Kratochvil.jpg",
+} as const;
 
 const PAGE_BG = "#503728";
-/** Receipt card — testing white surface; revert to `#5c4336` + cream text when done. */
 const RECEIPT_SURFACE = "#ffffff";
 
 type ReceiptLine = {
@@ -60,17 +54,29 @@ type ReceiptLine = {
   qty: number;
   unitAmount: string;
   lineAmount: string;
+  imageSrc: string;
 };
 
 const RECEIPT_LINES: ReceiptLine[] = [
-  { id: "1", name: "لاتيه كبير بالشوفان", qty: 1, unitAmount: "٥٫٢٥", lineAmount: "٥٫٢٥" },
-  { id: "2", name: "كرواسون بالزبدة", qty: 1, unitAmount: "٤٫٢٥", lineAmount: "٤٫٢٥" },
+  {
+    id: "1",
+    name: "لاتيه كبير بالشوفان",
+    qty: 1,
+    unitAmount: "٥٫٢٥",
+    lineAmount: "٥٫٢٥",
+    imageSrc: DEMO_PRODUCT_IMAGES.latte,
+  },
+  {
+    id: "2",
+    name: "كرواسون بالزبدة",
+    qty: 1,
+    unitAmount: "٤٫٢٥",
+    lineAmount: "٤٫٢٥",
+    imageSrc: DEMO_PRODUCT_IMAGES.croissant,
+  },
 ];
 
 const RECEIPT_TOTAL_AMOUNT = "٩٫٥٠";
-
-/** Voice session auto-ends after this duration (ElevenLabs WebRTC). */
-const SESSION_LIMIT_MS = 30_000;
 
 function ReceiptBlock() {
   return (
@@ -92,7 +98,7 @@ function ReceiptBlock() {
           >
             <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-neutral-100 sm:h-28 sm:w-28">
               <img
-                src={PLACEHOLDER_IMG}
+                src={line.imageSrc}
                 alt="صورة المنتج"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
@@ -125,175 +131,9 @@ function ReceiptBlock() {
   );
 }
 
-function LogoBar() {
-  return (
-    <header dir="rtl" className="flex shrink-0 items-center justify-between gap-6 px-5 py-4 sm:px-8">
-      <Link href="/" className="block shrink-0">
-        <h2
-          className="text-xl font-bold tracking-tight text-[#FFF7DD] transition-opacity hover:opacity-90"
-          style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-        >
-          كاشيرك
-        </h2>
-      </Link>
-      <img
-        src={RESTAURANT_LOGO}
-        alt="دار القهوة"
-        className="h-9 w-auto max-w-[min(52vw,220px)] object-contain object-right sm:h-11"
-        loading="eager"
-        decoding="async"
-        referrerPolicy="no-referrer"
-      />
-    </header>
-  );
-}
-
-function DriveThruOrb({
-  agentState,
-  status,
-  onOrbClick,
-  getInputVolume,
-  getOutputVolume,
-}: {
-  agentState: AgentState;
-  status: ConversationStatus;
-  onOrbClick: () => void | Promise<void>;
-  getInputVolume: () => number;
-  getOutputVolume: () => number;
-}) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const busy = status === "connecting" || status === "connected";
-
-  if (!mounted) {
-    return (
-      <div className="mx-auto aspect-square w-full max-w-[min(92vw,440px)] rounded-full bg-black/15" aria-hidden />
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={() => void onOrbClick()}
-      disabled={busy}
-      className="relative mx-auto block w-full max-w-[min(92vw,440px)] cursor-pointer rounded-full border-0 bg-transparent p-0 shadow-none outline-none ring-offset-4 ring-offset-[#503728] focus-visible:ring-2 focus-visible:ring-[#FFF7DD]/70 disabled:cursor-default disabled:opacity-95"
-      aria-label={
-        busy ? "جاري المحادثة الصوتية" : "اضغط للتحدث مع الوكيل لمدة تصل إلى ٣٠ ثانية"
-      }
-    >
-      <Suspense
-        fallback={
-          <div className="mx-auto aspect-square w-full max-w-[min(92vw,440px)] rounded-full bg-black/10" aria-hidden />
-        }
-      >
-        <Orb
-          agentState={agentState}
-          colors={["#FFF7DD", "#c9a87c"]}
-          volumeMode="manual"
-          getInputVolume={getInputVolume}
-          getOutputVolume={getOutputVolume}
-          className="relative mx-auto aspect-square w-full max-w-[min(92vw,440px)] min-h-[min(72vw,440px)]"
-        />
-      </Suspense>
-    </button>
-  );
-}
-
 function DriveThruDemoInner() {
-  const sessionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const endSessionRef = useRef<(() => void) | null>(null);
-
-  const clearSessionTimer = useCallback(() => {
-    if (sessionTimerRef.current !== null) {
-      clearTimeout(sessionTimerRef.current);
-      sessionTimerRef.current = null;
-    }
-  }, []);
-
-  const { startSession, endSession, status, mode, getInputVolume, getOutputVolume } =
-    useConversation({
-      onConnect: () => {
-        clearSessionTimer();
-        sessionTimerRef.current = window.setTimeout(() => {
-          endSessionRef.current?.();
-          sessionTimerRef.current = null;
-        }, SESSION_LIMIT_MS);
-      },
-      onDisconnect: () => {
-        clearSessionTimer();
-      },
-    });
-
-  endSessionRef.current = endSession;
-
-  const agentState = useMemo((): AgentState => {
-    if (status === "connecting") return "thinking";
-    if (status !== "connected") return null;
-    return mode === "speaking" ? "talking" : "listening";
-  }, [status, mode]);
-
-  const [voiceHint, setVoiceHint] = useState<string | null>(null);
-
-  const handleOrbClick = async () => {
-    if (status === "connecting" || status === "connected") return;
-
-    setVoiceHint(null);
-
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
-      setVoiceHint("يلزم السماح بالميكروفون للتحدث مع الوكيل.");
-      return;
-    }
-
-    let token: string | undefined;
-    try {
-      const res = await fetch("/api/elevenlabs/conversation-token");
-      if (res.ok) {
-        const data = (await res.json()) as { token?: string };
-        token = data.token;
-      }
-    } catch {
-      /* fall through — may use public agent id */
-    }
-
-    const viteAgentId =
-      typeof import.meta.env.VITE_ELEVENLABS_AGENT_ID === "string" &&
-      import.meta.env.VITE_ELEVENLABS_AGENT_ID.length > 0
-        ? import.meta.env.VITE_ELEVENLABS_AGENT_ID
-        : undefined;
-
-    const arabic = {
-      overrides: {
-        agent: {
-          language: "ar" as const,
-        },
-      },
-    };
-
-    if (token) {
-      startSession({
-        conversationToken: token,
-        ...arabic,
-      });
-      return;
-    }
-
-    if (viteAgentId) {
-      startSession({
-        agentId: viteAgentId,
-        ...arabic,
-      });
-      return;
-    }
-
-    setVoiceHint(
-      "أضِف ELEVENLABS_API_KEY و ELEVENLABS_AGENT_ID في .env.local أو عيّن VITE_ELEVENLABS_AGENT_ID لوكيل عام.",
-    );
-  };
+  const { agentState, handleOrbClick, voiceHint, status, getInputVolume, getOutputVolume } =
+    useDriveThruVoiceDemo();
 
   return (
     <div
@@ -302,7 +142,7 @@ function DriveThruDemoInner() {
       lang="ar"
       style={{ backgroundColor: PAGE_BG }}
     >
-      <LogoBar />
+      <DemoLogoBar />
 
       <div
         className="grid min-h-0 flex-1 grid-cols-1 gap-8 px-4 py-6 sm:px-8 lg:h-full lg:min-h-0 lg:grid-cols-[minmax(0,1fr)_minmax(320px,44%)] lg:items-stretch lg:gap-10"

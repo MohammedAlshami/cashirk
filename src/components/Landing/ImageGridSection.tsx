@@ -3,15 +3,11 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ScrollAnimationWrapper from "@/components/Landing/ScrollAnimationWrapper";
-
-const QUOTE_TEXT =
-  "كاشيرك وكيل صوتي بالذكاء الاصطناعي لممرات درايف ثرو يجيب على مكبر الصوت ويفهم الطلبات الطبيعية مع التعديلات والاستبدالات ويؤكد الإجماليات ويمرر تذاكر منظمة إلى نقطة البيع أو شاشة المطبخ ليبقى الطاقم مركزا على الطعام والخدمة.";
-
-const SUBTITLE =
-  "ذكاء اصطناعي صوتي لممرات درايف ثرو — سريع ودقيق ومتسق مع علامتك عند ذروة الطلب";
+import { useLandingLocale } from "@/i18n/LandingLocaleContext";
 
 export default function ImageGridSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { messages } = useLandingLocale();
 
   const { scrollYProgress: sectionProgress } = useScroll({
     target: sectionRef,
@@ -32,13 +28,13 @@ export default function ImageGridSection() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[60vh]">
               <div className="lg:border-e border-white/10 lg:pe-12">
                 <p className="font-display-hero text-7xl sm:text-8xl lg:text-[8.75rem] font-extrabold tracking-tighter leading-[0.9] text-[#FFF7DD]">
-                  ماذا نفعل
+                  {messages.imageGrid.title}
                 </p>
               </div>
               <div>
-                <p className="font-sf-pro-text text-2xl text-[#FFF7DD]/90 mb-6">{SUBTITLE}</p>
+                <p className="font-sf-pro-text text-2xl text-[#FFF7DD]/90 mb-6">{messages.imageGrid.subtitle}</p>
                 <p className="font-sf-pro-display text-lg text-[#FFF7DD]/60 leading-relaxed">
-                  {QUOTE_TEXT}
+                  {messages.imageGrid.quote}
                 </p>
               </div>
             </div>

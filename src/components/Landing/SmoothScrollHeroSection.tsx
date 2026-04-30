@@ -1,24 +1,18 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from '@/compat/next-link';
 import Image from '@/compat/next-image';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
+import { useLandingLocale } from '@/i18n/LandingLocaleContext';
+import { landingHashHref, landingHomeHref } from '@/i18n/landing-path';
 
-const EXPANDED_SECTIONS: Array<{ id: string; label: string; href?: string; image: string }> = [
-  { id: 'home', label: 'الرئيسية', href: '/', image: '/landing/images/1/bg.png' },
-];
+const MAIN_IMAGE_URL = '/landing/hero-main.png';
 
-const MAIN_IMAGE_URL =
-  'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const SHOW_DEMO_IN_LANDING_NAV = false;
 
-const PARALLAX_HERO_IMAGES = [
-  { src: '/landing/images/5-parallax-a.jpg', alt: 'خدمة درايف ثرو' },
-  { src: '/landing/images/6-parallax-b.jpg', alt: 'مطعم خدمة سريعة' },
-];
-
-const MENU_SCROLL_IMAGES = [MAIN_IMAGE_URL, PARALLAX_HERO_IMAGES[0].src, PARALLAX_HERO_IMAGES[1].src];
+const PARALLAX_SRC = ['/landing/images/5-parallax-a.jpg', '/landing/images/6-parallax-b.jpg'];
 
 function NavMenuImageCard({ src }: { src: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -98,10 +92,25 @@ export function SmoothScrollHeroContent() {
 export const LandingNav = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { scrollY } = useScroll();
+  const { locale, messages } = useLandingLocale();
+
+  const expandedSections = useMemo(
+    () => [{ id: 'home', label: messages.nav.home, href: landingHashHref(locale, 'home') }],
+    [locale, messages.nav.home],
+  );
+
+  const menuScrollImages = useMemo(
+    () => [MAIN_IMAGE_URL, ...PARALLAX_SRC],
+    [],
+  );
 
   useMotionValueEvent(scrollY, 'change', () => {
     if (isExpanded) setIsExpanded(false);
   });
+
+  const otherLocaleHref = locale === 'ar' ? '/en' : '/';
+  const otherLocaleLabel =
+    locale === 'ar' ? messages.language.switchToEn : messages.language.switchToAr;
 
   return (
     <>
@@ -112,21 +121,28 @@ export const LandingNav = () => {
             animate={{ height: 56, borderRadius: 16, maxWidth: '100%' }}
           >
             <div className="flex w-full items-center justify-between px-4 text-[#FFF7DD] sm:px-5">
-              <Link href="/" className="block">
-                <h2
-                  className="flex text-xl font-bold tracking-tight transition-opacity hover:opacity-90"
-                  style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-                >
-                  كاشيرك
+              <Link href={landingHomeHref(locale)} className="block">
+                <h2 className="flex text-xl font-bold tracking-tight transition-opacity hover:opacity-90">
+                  {messages.nav.brand}
                 </h2>
               </Link>
-              <Link
-                href="/demo"
-                className="shrink-0 text-sm font-medium text-[#FFF7DD]/70 transition-colors hover:text-[#FFF7DD]"
-                style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-              >
-                تجربة القائمة
-              </Link>
+              <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+                <Link
+                  href={otherLocaleHref}
+                  className="text-sm font-medium text-[#FFF7DD]/70 transition-colors hover:text-[#FFF7DD]"
+                  aria-label={messages.language.currentAria}
+                >
+                  {otherLocaleLabel}
+                </Link>
+                {SHOW_DEMO_IN_LANDING_NAV ? (
+                  <Link
+                    href="/demo"
+                    className="text-sm font-medium text-[#FFF7DD]/70 transition-colors hover:text-[#FFF7DD]"
+                  >
+                    {messages.nav.demo}
+                  </Link>
+                ) : null}
+              </div>
             </div>
           </motion.nav>
         </div>
@@ -147,7 +163,7 @@ export const LandingNav = () => {
                 <div className="flex-1 overflow-hidden relative">
                   <div className="absolute inset-0 -my-8 nav-menu-scroll-down">
                     <div className="flex flex-col gap-8">
-                      {[...MENU_SCROLL_IMAGES, ...MENU_SCROLL_IMAGES].map((src, idx) => (
+                      {[...menuScrollImages, ...menuScrollImages].map((src, idx) => (
                         <NavMenuImageCard key={`left-${idx}`} src={src} />
                       ))}
                     </div>
@@ -156,7 +172,7 @@ export const LandingNav = () => {
                 <div className="flex-1 overflow-hidden relative">
                   <div className="absolute inset-0 -my-8 nav-menu-scroll-up">
                     <div className="flex flex-col gap-8">
-                      {[...MENU_SCROLL_IMAGES].reverse().concat([...MENU_SCROLL_IMAGES].reverse()).map((src, idx) => (
+                      {[...menuScrollImages].reverse().concat([...menuScrollImages].reverse()).map((src, idx) => (
                         <NavMenuImageCard key={`right-${idx}`} src={src} />
                       ))}
                     </div>
@@ -166,13 +182,14 @@ export const LandingNav = () => {
 
               <div className="flex flex-1 items-center justify-center lg:justify-start">
                 <nav className="flex flex-col items-start gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-                  <div className="text-sm font-medium text-[#FFF7DD]/40 lg:text-base">نظرة عامة</div>
-                  {EXPANDED_SECTIONS.map((section) => (
+                  <div className="text-sm font-medium text-[#FFF7DD]/40 lg:text-base">
+                    {messages.nav.menuOverview}
+                  </div>
+                  {expandedSections.map((section) => (
                     <Link
                       key={section.id}
-                      href={section.href ?? `/#${section.id}`}
+                      href={section.href}
                       className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FFF7DD] tracking-tight transition-colors hover:text-[#FFF7DD]/80"
-                      style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                       onClick={() => setIsExpanded(false)}
                     >
                       {section.label}
@@ -210,6 +227,8 @@ export const LandingNav = () => {
 };
 
 const Hero = () => {
+  const { messages } = useLandingLocale();
+
   return (
     <section className="relative w-full overflow-hidden bg-[#0E100F] pt-24 sm:pt-28">
       <ContainerScroll
@@ -218,17 +237,13 @@ const Hero = () => {
             <h1
               className="mb-2 select-none font-bold leading-none tracking-tight text-[#FFF7DD] sm:mb-3"
               style={{
-                fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontSize: 'clamp(40px, 9vw, 140px)',
               }}
             >
-              كاشيرك
+              {messages.hero.title}
             </h1>
-            <p
-              className="mx-auto mb-2 max-w-2xl text-balance text-sm font-medium text-[#FFF7DD] sm:mb-3 sm:text-base md:text-lg lg:text-xl"
-              style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-            >
-              وكيل صوتي بالذكاء الاصطناعي لخدمة السيارات (درايف ثرو)
+            <p className="mx-auto mb-2 max-w-2xl text-balance text-sm font-medium text-[#FFF7DD] sm:mb-3 sm:text-base md:text-lg lg:text-xl">
+              {messages.hero.tagline}
             </p>
           </>
         }

@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import "@/styles/landing-ar.css";
+import "@/styles/landing-i18n.css";
 import { ReactLenis } from "lenis/react";
+import { useLandingLocale } from "@/i18n/LandingLocaleContext";
 import { SmoothScrollHeroContent } from "@/components/Landing/SmoothScrollHeroSection";
 import ImageGridSection from "@/components/Landing/ImageGridSection";
 import ContentSection from "@/components/Landing/ContentSection";
@@ -17,12 +18,15 @@ import { LandingVariationProvider } from "@/components/Landing/LandingVariationC
 import Footer from "@/components/Footer";
 
 export function LandingPage() {
+  const { dir, lang, locale } = useLandingLocale();
+
   return (
     <LandingVariationProvider>
       <div
         className="landing-page min-h-screen relative text-[#FFF7DD]"
-        dir="rtl"
-        lang="ar"
+        dir={dir}
+        lang={lang}
+        data-locale={locale}
         style={{ backgroundColor: '#0E100F' }}
       >
         <ReactLenis root options={{ lerp: 0.05 }}>

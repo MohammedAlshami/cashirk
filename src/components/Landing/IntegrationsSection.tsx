@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from '@/compat/next-image';
+import { useLandingLocale } from '@/i18n/LandingLocaleContext';
 
 const INTEGRATIONS: {
   id: string;
@@ -67,6 +68,8 @@ const morphVariants = {
 export default function IntegrationsSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const { locale, messages } = useLandingLocale();
+  const primaryIsAr = locale === 'ar';
 
   return (
     <section ref={sectionRef} id="integrations" className="bg-[#0E100F]">
@@ -77,16 +80,15 @@ export default function IntegrationsSection() {
         variants={morphVariants}
       >
         <div className="container mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <h2
-            className="mb-14 text-balance text-center text-3xl font-semibold md:mb-16 md:text-4xl lg:text-5xl text-[#FFF7DD]"
-            style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-          >
-            التكامل مع أنظمة نقطة البيع
+          <h2 className="mb-14 text-balance text-center text-3xl font-semibold md:mb-16 md:text-4xl lg:text-5xl text-[#FFF7DD]">
+            {messages.integrations.sectionTitle}
           </h2>
 
           <ul className="flex flex-wrap items-end justify-center gap-x-8 gap-y-14 sm:gap-x-12 md:gap-x-16 md:gap-y-16 lg:gap-x-20">
             {INTEGRATIONS.map((item) => {
               const isSvg = item.src.endsWith('.svg');
+              const primary = primaryIsAr ? item.nameAr : item.nameEn;
+              const secondary = primaryIsAr ? item.nameEn : item.nameAr;
               return (
                 <li key={item.id} className="flex w-[10rem] flex-col items-center sm:w-[11rem] md:w-[12rem]">
                   {isSvg ? (
@@ -108,14 +110,11 @@ export default function IntegrationsSection() {
                       loading="lazy"
                     />
                   )}
-                  <span
-                    className="mt-4 text-center text-base font-medium text-[#FFF7DD] sm:text-lg md:text-xl"
-                    style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-                  >
-                    {item.nameAr}
+                  <span className="mt-4 text-center text-base font-medium text-[#FFF7DD] sm:text-lg md:text-xl">
+                    {primary}
                   </span>
                   <span className="mt-1 text-center text-xs font-medium uppercase tracking-[0.12em] text-[#FFF7DD]/40 sm:text-sm md:text-base">
-                    {item.nameEn}
+                    {secondary}
                   </span>
                 </li>
               );

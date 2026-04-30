@@ -9,6 +9,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Link from '@/compat/next-link';
+import { useLandingLocale } from '@/i18n/LandingLocaleContext';
+import { landingHashHref } from '@/i18n/landing-path';
 
 const morphVariants = {
   hidden: { opacity: 0, scale: 0.97, filter: 'blur(12px)' },
@@ -23,39 +25,7 @@ const morphVariants = {
 export default function FAQsTwo() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
-
-  const faqItems = [
-    {
-      id: 'item-1',
-      question: 'ما هو كاشيرك؟',
-      answer:
-        'كاشيرك وكيل صوتي بالذكاء الاصطناعي لممرات درايف ثرو يستمع ويتحدث مثل موظف تدريب ماهر ويلتقط التعديلات ويمرر التذاكر المكتملة إلى نقطة البيع أو شاشة المطبخ.',
-    },
-    {
-      id: 'item-2',
-      question: 'كيف يبدو للزبائن؟',
-      answer:
-        'يستخدم الوكيل كلاما منخفض التأخير وبصياغة آمنة للعلامة بحيث تبدو التحيات وعروض البيع الإضافي والتأكيدات طبيعية ومتسقة وسهلة المتابعة في الممر الصاخب.',
-    },
-    {
-      id: 'item-3',
-      question: 'هل يمكنه اتباع قائمتنا وسياساتنا؟',
-      answer:
-        'نعم. نُزامن القائمة والأسعار وأوقات اليوم وقواعد الامتثال ليحترم الوكيل العناصر المتوقفة والحساسيات والعروض كما يفعل عضو طاقم مدرب جيدا.',
-    },
-    {
-      id: 'item-4',
-      question: 'ماذا يحدث عندما يحتاج الزبون إلى إنسان؟',
-      answer:
-        'يمكن تصعيد الطلبات الحساسة أو المعقدة بسلاسة إلى عضو يرتدي سماعة مع الحفاظ على السياق لكي لا يكرر الزبون نفسه.',
-    },
-    {
-      id: 'item-5',
-      question: 'لمن صُمم كاشيرك؟',
-      answer:
-        'لعلامات الوجبات السريعة والمطاعم غير الرسمية وللمشغلين متعددي الفروع وللمجموعات الامتيازية التي تريد أتمتة صوتية موثوقة عند المكبر من دون المساس بدقة التذكرة.',
-    },
-  ];
+  const { locale, messages } = useLandingLocale();
 
   return (
     <section
@@ -69,16 +39,13 @@ export default function FAQsTwo() {
         variants={morphVariants}
       >
         <div className="mx-auto max-w-xl text-center">
-          <h2
-            className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl text-[#FFF7DD]"
-            style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
-          >
-            الأسئلة الشائعة
+          <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl text-[#FFF7DD]">
+            {messages.faq.title}
           </h2>
           <p
             className="mt-4 text-balance text-[#FFF7DD]/90"
           >
-            إجابات مختصرة عن الوكيل الصوتي لممرات درايف ثرو وكيف يدعم ممراتك وطاقمك.
+            {messages.faq.subtitle}
           </p>
         </div>
 
@@ -88,7 +55,7 @@ export default function FAQsTwo() {
             collapsible
             className="w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-3 shadow-sm ring-2 ring-white/5 md:px-8"
           >
-            {faqItems.map((item) => (
+            {messages.faq.items.map((item) => (
               <AccordionItem
                 key={item.id}
                 value={item.id}
@@ -96,7 +63,6 @@ export default function FAQsTwo() {
               >
                 <AccordionTrigger
                   className="cursor-pointer text-base hover:no-underline text-[#FFF7DD]"
-                  style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
                 >
                   {item.question}
                 </AccordionTrigger>
@@ -114,12 +80,12 @@ export default function FAQsTwo() {
           <p
             className="mt-6 px-6 md:px-8 text-[#FFF7DD]/90 text-[0.9375rem]"
           >
-            لم تجد ما تبحث عنه؟{' '}
+            {messages.faq.contactPrompt}{' '}
             <Link
-              href="/#contact"
+              href={landingHashHref(locale, 'contact')}
               className="underline underline-offset-4"
             >
-              تواصل معنا
+              {messages.faq.contactLink}
             </Link>
           </p>
         </div>
