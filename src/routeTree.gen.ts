@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as DemoV2RouteImport } from './routes/demo-v2'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as ApiEmpireSushiMenuItemsRouteImport } from './routes/api/empire
 import { Route as ApiEmpireSushiFinancialsRouteImport } from './routes/api/empire-sushi.financials'
 import { Route as ApiElevenlabsConversationTokenRouteImport } from './routes/api/elevenlabs.conversation-token'
 
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoV2Route = DemoV2RouteImport.update({
   id: '/demo-v2',
   path: '/demo-v2',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/demo-v2': typeof DemoV2Route
+  '/map': typeof MapRoute
   '/en/': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/demo-v2': typeof DemoV2Route
+  '/map': typeof MapRoute
   '/en': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
   '/demo-v2': typeof DemoV2Route
+  '/map': typeof MapRoute
   '/en/': typeof EnIndexRoute
   '/api/elevenlabs/conversation-token': typeof ApiElevenlabsConversationTokenRoute
   '/api/empire-sushi/financials': typeof ApiEmpireSushiFinancialsRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/'
     | '/demo'
     | '/demo-v2'
+    | '/map'
     | '/en/'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/'
     | '/demo'
     | '/demo-v2'
+    | '/map'
     | '/en'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/'
     | '/demo'
     | '/demo-v2'
+    | '/map'
     | '/en/'
     | '/api/elevenlabs/conversation-token'
     | '/api/empire-sushi/financials'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
   DemoV2Route: typeof DemoV2Route
+  MapRoute: typeof MapRoute
   EnIndexRoute: typeof EnIndexRoute
   ApiElevenlabsConversationTokenRoute: typeof ApiElevenlabsConversationTokenRoute
   ApiEmpireSushiFinancialsRoute: typeof ApiEmpireSushiFinancialsRoute
@@ -138,6 +151,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo-v2': {
       id: '/demo-v2'
       path: '/demo-v2'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
   DemoV2Route: DemoV2Route,
+  MapRoute: MapRoute,
   EnIndexRoute: EnIndexRoute,
   ApiElevenlabsConversationTokenRoute: ApiElevenlabsConversationTokenRoute,
   ApiEmpireSushiFinancialsRoute: ApiEmpireSushiFinancialsRoute,

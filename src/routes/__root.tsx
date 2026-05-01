@@ -65,7 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const isLandingLocale =
     pathname === '/' || pathname === '/en' || pathname === '/en/'
   const isFullBleed =
-    isLandingLocale || pathname === '/demo' || pathname === '/demo-v2'
+    isLandingLocale || pathname === '/demo' || pathname === '/demo-v2' || pathname === '/map'
   const showDefaultNavbar = !isFullBleed
   return (
     <html>
