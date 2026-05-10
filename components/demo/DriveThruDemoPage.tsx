@@ -15,12 +15,7 @@ const AR_BODY_FONT = '"IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif';
 const COPY = {
   orbIdle: "اضغط الكرة للتحدث",
   orbActive: "اضغط الكرة للإيقاف",
-  total: "الإجمالي",
-  simulate: "محاكاة",
-  simulateBusy: "جارٍ المحاكاة...",
 } as const;
-
-const SIMULATION_PROMPT = "أريد لاتيه ساخن واحد بدون سكر. إذا احتجت شيئاً آخر، فاسألني عن السكر والكمية فقط.";
 
 function MoneyAmount({ amount, className }: { amount: string; className?: string }) {
   return (
@@ -33,14 +28,14 @@ function MoneyAmount({ amount, className }: { amount: string; className?: string
   );
 }
 
-function OrderSheet({ line, visible }: { line: OrderLine; visible: boolean }) {
+function OrderSheet({ line }: { line: OrderLine }) {
   return (
     <motion.aside
       dir="rtl"
       style={{ fontFamily: AR_BODY_FONT }}
       className="w-[min(86vw,380px)] overflow-hidden rounded-[2rem] bg-white text-right"
       initial={{ x: -54, opacity: 0, scale: 0.985 }}
-      animate={{ x: visible ? 0 : -54, opacity: visible ? 1 : 0, scale: visible ? 1 : 0.985 }}
+      animate={{ x: 0, opacity: 1, scale: 1 }}
       exit={{ x: -54, opacity: 0, scale: 0.985 }}
       transition={{ type: "spring", stiffness: 340, damping: 34, mass: 0.92 }}
     >
@@ -100,7 +95,13 @@ function OrderSheet({ line, visible }: { line: OrderLine; visible: boolean }) {
   );
 }
 
-export function DriveThruDemoPage({ agentId, conversationTokenPath }: { agentId: string; conversationTokenPath: string }) {
+export function DriveThruDemoPage({
+  agentId,
+  conversationTokenPath,
+}: {
+  agentId: string;
+  conversationTokenPath: string;
+}) {
   return (
     <ConversationProvider>
       <DriveThruDemoPageInner agentId={agentId} conversationTokenPath={conversationTokenPath} />
@@ -108,47 +109,43 @@ export function DriveThruDemoPage({ agentId, conversationTokenPath }: { agentId:
   );
 }
 
-function DriveThruDemoPageInner({ agentId, conversationTokenPath }: { agentId: string; conversationTokenPath: string }) {
+function DriveThruDemoPageInner({
+  agentId,
+  conversationTokenPath,
+}: {
+  agentId: string;
+  conversationTokenPath: string;
+}) {
   const {
     agentState,
     handleOrbClick,
-    replaySimulationStream,
-    playRecordingIntoSession,
     status,
     getInputVolume,
     getOutputVolume,
     orderTotal,
     orderItems,
     previewLine,
-    isSimulating,
-    isUploadingRecording,
-  } =
-    useDriveThruVoiceDemo(agentId, conversationTokenPath);
-  const recordingInputRef = React.useRef<HTMLInputElement | null>(null);
+  } = useDriveThruVoiceDemo(agentId, conversationTokenPath);
 
   const currentLine = orderItems[orderItems.length - 1] ?? previewLine;
   const sheetVisible = Boolean(currentLine);
 
-  const handleSimulationClick = React.useCallback(() => {
-    void replaySimulationStream(SIMULATION_PROMPT);
-  }, [replaySimulationStream]);
-
-  const handleRecordingPick = React.useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    if (!file) return;
-    await playRecordingIntoSession(file);
-  }, [playRecordingIntoSession]);
-
   return (
-    <div className="landing-page flex min-h-screen flex-col text-[#FFF7DD]" dir="rtl" lang="ar" style={{ backgroundColor: PAGE_BG }}>
-      <DemoLogoBar/>
+    <div
+      className="landing-page flex min-h-screen flex-col text-[#FFF7DD]"
+      dir="rtl"
+      lang="ar"
+      style={{ backgroundColor: PAGE_BG }}
+    >
+      <DemoLogoBar />
 
       <div dir="ltr" className="flex min-h-0 flex-1 overflow-hidden px-4 py-6 sm:px-8">
         <div className="flex min-h-[calc(100vh-8rem)] w-full items-center gap-6 overflow-hidden rounded-[2.25rem] bg-transparent">
           <div className="flex shrink-0 items-center">
             <AnimatePresence initial={false} mode="wait">
-              {sheetVisible && currentLine ? <OrderSheet key={currentLine.lineKey} line={currentLine} visible /> : null}
+              {sheetVisible && currentLine ? (
+                <OrderSheet key={currentLine.lineKey} line={currentLine} />
+              ) : null}
             </AnimatePresence>
           </div>
 
@@ -162,7 +159,11 @@ function DriveThruDemoPageInner({ agentId, conversationTokenPath }: { agentId: s
                 aria-label={status === "connected" || status === "connecting" ? COPY.orbActive : COPY.orbIdle}
                 title={status === "connected" || status === "connecting" ? COPY.orbActive : COPY.orbIdle}
               >
-                <DriveThruOrb agentState={agentState} getInputVolume={getInputVolume} getOutputVolume={getOutputVolume} />
+                <DriveThruOrb
+                  agentState={agentState}
+                  getInputVolume={getInputVolume}
+                  getOutputVolume={getOutputVolume}
+                />
               </button>
 
               <div dir="rtl" className="mt-4 text-center" style={{ fontFamily: AR_BODY_FONT }}>

@@ -8,7 +8,6 @@ import ImageGridSection from "@/components/Landing/ImageGridSection";
 import TextBoxRevealSection from "@/components/Landing/TextBoxRevealSection";
 import MistFeaturesFive from "@/components/Landing/MistFeaturesFive";
 import IntegrationsSection from "@/components/Landing/IntegrationsSection";
-import MistFeaturesSix from "@/components/Landing/MistFeaturesSix";
 import FAQsTwo from "@/components/Landing/FAQsTwo";
 import CTASection from "@/components/Landing/CTASection";
 import { LandingVariationProvider } from "@/components/Landing/LandingVariationContext";
@@ -44,10 +43,6 @@ export function LandingPage() {
 
             <div id="integrations">
               <IntegrationsSection />
-            </div>
-
-            <div id="mist-6">
-              <MistFeaturesSix />
             </div>
 
             <div id="features-start" className="h-px w-full" aria-hidden />
