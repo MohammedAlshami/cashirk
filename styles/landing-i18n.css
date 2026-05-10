@@ -1,0 +1,27 @@
+.landing-page[data-locale="ar"],
+.landing-page[data-locale="ar"] h1,
+.landing-page[data-locale="ar"] h2,
+.landing-page[data-locale="ar"] h3,
+.landing-page[data-locale="ar"] h4,
+.landing-page[data-locale="ar"] h5,
+.landing-page[data-locale="ar"] h6 {
+  font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
+.landing-page[data-locale="en"],
+.landing-page[data-locale="en"] h1,
+.landing-page[data-locale="en"] h2,
+.landing-page[data-locale="en"] h3,
+.landing-page[data-locale="en"] h4,
+.landing-page[data-locale="en"] h5,
+.landing-page[data-locale="en"] h6 {
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+.landing-page[data-locale="en"] {
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+.landing-page[data-locale="ar"] {
+  font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}

@@ -1,36 +1,38 @@
-# TanStack Start - Basic Example
+# Real-Time Voice Agent (Next.js)
 
-This is the basic TanStack Start example, demonstrating the fundamentals of building applications with TanStack Router and TanStack Start.
+Live voice conversations with the ElevenLabs Agents Platform using the [React Agents SDK](https://elevenlabs.io/docs/eleven-agents/libraries/react).
 
-- [TanStack Router Docs](https://tanstack.com/router)
+## Setup
 
-It's deployed automagically with Netlify!
+1. Copy the environment file and add your credentials:
 
-- [Netlify](https://netlify.com/)
+   ```bash
+   cp .env.example .env
+   ```
 
-## Start a new project based on this example
+   Then edit `.env` and set:
+   - `ELEVENLABS_API_KEY`
 
-To start a new project based on this example, run:
+2. Install dependencies:
 
-```sh
-npx gitpick TanStack/router/tree/main/examples/react/start-basic start-basic
+   ```bash
+   pnpm install
+   ```
+
+## Run
+
+```bash
+pnpm run dev
 ```
 
-## Getting Started
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-From your terminal:
+## Usage
 
-```sh
-pnpm install
-pnpm dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
-
-## Build
-
-To build the app for production:
-
-```sh
-pnpm build
-```
+- Enter an agent name and a system prompt, then click **Create agent**.
+- The app creates the agent server-side and stores the returned agent id in the page.
+- Click **Start** and allow microphone access when prompted.
+- The app fetches a fresh conversation token for the created agent and starts a WebRTC session.
+- Speak naturally and watch the live conversation state update as the agent listens and responds.
+- The page shows whether the agent is currently speaking and renders the interaction as a running conversation.
+- Click **Stop** to end the session.
