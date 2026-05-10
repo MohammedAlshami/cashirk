@@ -1,4 +1,5 @@
 import { DriveThruDemoPage } from "@/components/demo/DriveThruDemoPage";
+import { DemoPasswordProtection } from "@/components/demo/DemoPasswordProtection";
 
 function resolveAgentId(): string {
   const server =
@@ -16,5 +17,9 @@ function resolveConversationTokenPath(): string {
 export default function DemoPage() {
   const agentId = resolveAgentId();
   const conversationTokenPath = resolveConversationTokenPath();
-  return <DriveThruDemoPage agentId={agentId} conversationTokenPath={conversationTokenPath} />;
+  return (
+    <DemoPasswordProtection>
+      <DriveThruDemoPage agentId={agentId} conversationTokenPath={conversationTokenPath} />
+    </DemoPasswordProtection>
+  );
 }

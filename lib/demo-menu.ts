@@ -1,8 +1,23 @@
-﻿/** Drive-thru demo menu: IDs must match ConvAI client tools + agent prompt. */
+/** Drive-thru demo menu: IDs must match ConvAI client tools + agent prompt. */
 
 export type MenuModifierHints = {
   sugar?: "regular" | "less" | "none";
   notes?: string;
+};
+
+/** A single selectable option shown in the order sheet UI. */
+export type MenuOption = {
+  /** Label shown in the sheet (Arabic) */
+  label: string;
+  /** Optional sub-label shown above the label (e.g. category name) */
+  category?: string;
+};
+
+/** A group of options shown together under a heading in the order sheet. */
+export type MenuOptionGroup = {
+  /** Section heading (Arabic) */
+  heading: string;
+  options: MenuOption[];
 };
 
 export type DemoMenuItem = {
@@ -11,7 +26,13 @@ export type DemoMenuItem = {
   price: number;
   imageSrc: string;
   description: string;
+  /** Text sent to the agent describing available customizations. */
   customization: string;
+  /**
+   * Option groups shown in the side/bottom sheet UI.
+   * Leave empty (`[]`) to hide the options panel entirely (e.g. food items).
+   */
+  optionGroups: MenuOptionGroup[];
 };
 
 export type OrderLine = {
@@ -30,6 +51,20 @@ export type TranscriptLine = {
   text: string;
 };
 
+// ---------------------------------------------------------------------------
+// Menu items
+// ---------------------------------------------------------------------------
+
+const SUGAR_OPTIONS: MenuOptionGroup = {
+  heading: "السكر",
+  options: [
+    { label: "بدون سكر" },
+    { label: "سكر أقل" },
+    { label: "عادي" },
+    { label: "إضافي" },
+  ],
+};
+
 export const DEMO_MENU: DemoMenuItem[] = [
   {
     id: "iced-spanish-latte",
@@ -38,6 +73,7 @@ export const DEMO_MENU: DemoMenuItem[] = [
     imageSrc: "/demo/menu/iced-spanish-latte.jpg",
     description: "إسبريسو مع حليب ونكهة إسبانية وحلاوة خفيفة، يقدم بارداً مع ثلج.",
     customization: "السكر: بدون سكر، سكر أقل، عادي، إضافي.",
+    optionGroups: [SUGAR_OPTIONS],
   },
   {
     id: "new-york-cheesecake",
@@ -45,7 +81,9 @@ export const DEMO_MENU: DemoMenuItem[] = [
     price: 16,
     imageSrc: "/demo/menu/new-york-cheesecake.jpg",
     description: "قطعة تشيزكيك كريمية بنمط نيويورك مع طبقة توت حلوة ومتوازنة.",
-    customization: "السكر: بدون سكر، سكر أقل، عادي، إضافي.",
+    // No sugar options — cheesecake sweetness is fixed
+    customization: "لا توجد تخصيصات إضافية.",
+    optionGroups: [],
   },
   {
     id: "hot-latte",
@@ -54,8 +92,17 @@ export const DEMO_MENU: DemoMenuItem[] = [
     imageSrc: "/demo/menu/hot-latte.jpg",
     description: "إسبريسو مع حليب مبخر، يقدم ساخناً بدرجة حرارة مريحة للشرب.",
     customization: "السكر: بدون سكر، سكر أقل، عادي، إضافي.",
+    optionGroups: [SUGAR_OPTIONS],
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+export function getMenuItemById(id: string): DemoMenuItem | undefined {
+  return DEMO_MENU.find((item) => item.id === id);
+}
 
 export function formatModifiersAr(m: MenuModifierHints): string {
   const parts: string[] = [];
@@ -86,7 +133,7 @@ export const AGENT_SYSTEM_PROMPT_AR = `أنت موظف طلبات صوتي لم�
 
 القواعد:
 1) استخدم فقط عناصر القائمة المعروفة في سياق القائمة (JSON). لا تخلق منتجات أو أسعاراً.
-2) اسأل فقط عن السكر إذا لم يذكره العميل بوضوح. لا تسأل عن الثلج أو الحرارة.
+2) اسأل فقط عن السكر إذا لم يذكره العميل بوضوح وكان الصنف يدعم تخصيص السكر. لا تسأل عن الثلج أو الحرارة.
 3) إذا لم يذكر العميل الكمية بوضوح، اسأل عن الكمية.
 4) عندما يذكر العميل طلباً مفهوماً من القائمة، لا تكتفِ بالرد النصي. نفّذ أداة العميل add_menu_item مباشرة إذا كان item_id والكمية والسكر متوفرين. إذا كان السكر أو الكمية غير واضحين، اسأل فقط عن الناقص ثم نفّذ الأداة فوراً بعد الحصول عليه.
 5) عندما تتعرّف على الصنف لأول مرة، استدعِ preadd_menu_item فوراً وبمفردها لفتح البطاقة. لا تنتظر الكمية أو السكر قبل استدعائها.

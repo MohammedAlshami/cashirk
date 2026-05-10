@@ -41,6 +41,12 @@ export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
   useConversationClientTool("clear_order", clearOrder);
   useConversationClientTool("complete_order", completeOrder);
 
+  // Keep a ref to orderItems so onDisconnect can read the latest value without a stale closure
+  const orderItemsRef = useRef<OrderLine[]>([]);
+  useEffect(() => {
+    orderItemsRef.current = orderItems;
+  }, [orderItems]);
+
   const conversation = useConversation({
     onMessage: (message) => {
       const text = String((message as any).message ?? "").trim();
@@ -58,6 +64,11 @@ export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
     },
     onDisconnect: () => {
       setSecondsRemaining(0);
+      // Fallback: if the agent ended the call (via end_conversation system tool)
+      // without calling complete_order, finalize the order so the modal still shows.
+      if (orderItemsRef.current.length > 0) {
+        setOrderFinalized(true);
+      }
     },
     onError: (error) => {
       setVoiceHint(error instanceof Error ? error.message : String(error));
