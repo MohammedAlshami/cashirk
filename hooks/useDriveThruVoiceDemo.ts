@@ -5,6 +5,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AgentState } from "@/components/demo/Orb";
 import { DEMO_MENU, type OrderLine, type TranscriptLine } from "@/lib/demo-menu";
 import { useVoiceTools } from "@/hooks/voiceTools";
+
+const END_PHRASE_RE =
+  /(i'?ll\s+end\s+the\s+call|order\s+is\s+done|here\s+is\s+the\s+receipt|that's\s+all|thats\s+all|we('?re|\s+are)\s+done|closing\s+the\s+call|ending\s+the\s+call|final\s+receipt)/i;
+
+function shouldFinalizeFromAgentMessage(text: string) {
+  const normalized = text.trim().replace(/\s+/g, " ");
+  return END_PHRASE_RE.test(normalized);
+}
+
 export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
   const [voiceHint, setVoiceHint] = useState<string | null>(null);
   const [transcriptLines, setTranscriptLines] = useState<TranscriptLine[]>([]);
@@ -58,6 +67,13 @@ export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
         nextLineId.current += 1;
         return [...prev, { id: `m-${nextLineId.current}`, text }];
       });
+
+      const role = String((message as { role?: string }).role ?? "");
+      if (role === "agent" && shouldFinalizeFromAgentMessage(text)) {
+        setOrderFinalized(true);
+        setPreviewLine(null);
+        setTimeout(() => endSessionRef.current?.(), 0);
+      }
     },
     onConnect: () => {
       setSecondsRemaining(120);
@@ -71,7 +87,8 @@ export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
       }
     },
     onError: (error) => {
-      setVoiceHint(error instanceof Error ? error.message : String(error));
+      const message = typeof error === "string" ? error : String((error as { message?: string }).message ?? error);
+      setVoiceHint(message);
     },
   });
 
@@ -109,9 +126,22 @@ export function useDriveThruVoiceDemo(agentId: string, tokenEndpoint: string) {
     [orderItems],
   );
 
+  const resetSession = useCallback(async () => {
+    setOrderItems([]);
+    setPreviewLine(null);
+    setOrderFinalized(false);
+    setTranscriptLines([]);
+    setSecondsRemaining(0);
+    setVoiceHint(null);
+    nextLineId.current = 0;
+    orderItemsRef.current = [];
+    await endSession();
+  }, [endSession]);
+
   return {
     agentState,
     handleOrbClick,
+    resetSession,
     status,
     getInputVolume,
     getOutputVolume,

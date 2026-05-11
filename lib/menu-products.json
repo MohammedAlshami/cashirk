@@ -1,0 +1,282 @@
+[
+  {
+    "title": "اسبريسو - سنقل",
+    "description": "قهوة الإسبريسو بدون إضافات",
+    "price": "11.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387832?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو - صغير",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والرغوة الغنية",
+    "price": "12.0 ر.س",
+    "calories": "183 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387833?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو بالشوكولاتة المره - وسط",
+    "description": "مزيج من الاسبريسو الغني مع الحليب مع الشوكولاتة المره",
+    "price": "15.0 ر.س",
+    "calories": "428 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387834?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو بالشوكولاتة المره - كبير",
+    "description": "مزيج من الاسبريسو الغني مع الحليب مع الشوكولاتة المره",
+    "price": "18.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387834?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو بالتوفي - وسط",
+    "description": "مزيج من الاسبريسو الغني مع شراب بنكهة التوفي والحليب",
+    "price": "15.0 ر.س",
+    "calories": "428 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387835?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو بالتوفي - كبير",
+    "description": "مزيج من الاسبريسو الغني مع شراب بنكهة التوفي والحليب",
+    "price": "18.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387835?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "فلات وايت - وسط",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والرغوة الغنية",
+    "price": "13.0 ر.س",
+    "calories": "428 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387836?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "فلات وايت - كبير",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والرغوة الغنية",
+    "price": "16.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387836?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "موكا - سنقل",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والشوكولاتة",
+    "price": "15.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387838?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "موكا - دبل",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والشوكولاتة",
+    "price": "18.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387838?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "لاتيه - وسط",
+    "description": "قهوة الإسبريسو مع الحليب المبخر",
+    "price": "13.0 ر.س",
+    "calories": "428 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387840?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "لاتيه - كبير",
+    "description": "قهوة الإسبريسو مع الحليب المبخر",
+    "price": "16.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387840?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "كورتادو - سنقل",
+    "description": "كمية متساوية من قهوة الإسبريسو والحليب المبخر",
+    "price": "12.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387841?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "كورتادو - دبل",
+    "description": "كمية متساوية من قهوة الإسبريسو والحليب المبخر",
+    "price": "14.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387841?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة تركي - سنقل",
+    "description": "قهوة معده بالطريقة التركية التقليدية",
+    "price": "12.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387842?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة تركي - دبل",
+    "description": "قهوة معده بالطريقة التركية التقليدية",
+    "price": "14.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387842?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "امريكانو",
+    "description": "جرعة من قهوة الإسبريسو يضاف إليها الماء",
+    "price": "14.0 ر.س",
+    "calories": "18 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/3884355?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة امريكي",
+    "description": "جرعة من قهوة الإسبريسو يضاف إليها الماء",
+    "price": "15.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/3884356?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة فرنسي",
+    "description": "محضر على طريقتنا الخاصه",
+    "price": "17.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/3884357?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "شوكولاتة ساخنة",
+    "description": "مصنوعة من الشوكولاتة المذابة الممزوجة بالحليب",
+    "price": "16.0 ر.س",
+    "calories": "242 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/3884380?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة تركي مع حليب - دبل",
+    "description": "قهوة محضرة بالطريقة التركية التقليدية مع الحليب",
+    "price": "15.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/440639?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة تركي مع حليب - سنقل",
+    "description": "قهوة محضرة بالطريقة التركية التقليدية مع الحليب",
+    "price": "13.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/440639?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "اسبريسو - دبل",
+    "description": "قهوة الإسبريسو بدون إضافات",
+    "price": "14.0 ر.س",
+    "calories": "",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387832?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ماكياتو - كبير",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والرغوة الغنية",
+    "price": "14.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387833?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "شيزكيك البسبوسة باللوتس",
+    "description": "مزيج فريد من البسبوسة التقليدية والتشيز كيك الكريمي، حلوى غنية ولذيذة من لوتس تستحق التجربة.",
+    "price": "20.0 ر.س",
+    "calories": "150 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/global-menu-service/HS_SA/vendor/174890/product/51ae0769-3e3d-40b0-bc61-ccc76148d7cd.jpg?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "براوني شوكولاتة دبي",
+    "description": "مزيج لذيذ وفريد من الكنافة التقليدية والبراوني الغنية بالشوكولاتة، حلوى مثالية للاستمتاع بها.",
+    "price": "20.0 ر.س",
+    "calories": "186 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/global-menu-service/HS_SA/vendor/174890/product/7f8d2946-9262-497f-b9ee-2d9ae268d23a.jpg?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "موكا بالشوكولاته - موكا بالشوكولاته-وسط",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والشوكولاته",
+    "price": "22.0 ر.س",
+    "calories": "428 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image_url_ref/5cd229ce664e5527bbf2a515a91ba693.jpg?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "موكا بالشوكولاته - كبير",
+    "description": "قهوة الإسبريسو مع الحليب المبخر والشوكولاته",
+    "price": "18.0 ر.س",
+    "calories": "792 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image_url_ref/5cd229ce664e5527bbf2a515a91ba693.jpg?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة كولد برو قارورة",
+    "description": "قهوة غنية محضرة بالتنقيع البارد",
+    "price": "19.0 ر.س",
+    "calories": "4 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/3884354?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "قهوة مثلجة - كبير",
+    "description": "مشروب بارد مصنوع من الثلج ، اكسبرسو ، ماء بارد",
+    "price": "19.0 ر.س",
+    "calories": "15 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387850?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "١٦ - صغير",
+    "description": "مشروب بارد ممزوج بي الفانيليا معا الحليب معا شوت من السبريسو",
+    "price": "17.0 ر.س",
+    "calories": "930 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387851?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ايس سبانيش لاتيه - كبير",
+    "description": "مزيج من الاسبريسو يسكب فوق كوب من الحليب الطازج وحليب المكتف",
+    "price": "18.0 ر.س",
+    "calories": "229 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387852?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "شوكلت فرابتشينو - كبير",
+    "description": "ثلج ممزوج بالحليب مليء بصوص الشوكولاتة والقهوة مغطاة بالكريمة المخفوقة",
+    "price": "21.0 ر.س",
+    "calories": "399 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/product/image/387853?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "لاتيه بارد",
+    "description": "مزيج بارد من الحليب و اكسبرسو مع الثلج",
+    "price": "16.0 ر.س",
+    "calories": "93 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menus/menuitem/hsimg-1484545?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "فانيلا مثلجة - صغير",
+    "description": "مشروب بارد ممزوج بي الفانيليا معا الحليب معا شوت من السبريسو",
+    "price": "18.0 ر.س",
+    "calories": "930 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menus/menuitem/hsimg-6317789?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "ميلك شيك تمر",
+    "description": "ميلك شيك و تمر",
+    "price": "22.0 ر.س",
+    "calories": "695 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image_url_ref/67352205bfb0fe9527de9d275479d3ec.jpg?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "مياه معدنية",
+    "description": "مياه طبيعية منعشة وصحية",
+    "price": "2.0 ر.س",
+    "calories": "1 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menus/menuitem/hsimg-3884378?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "آيس شيكن وايت موكا",
+    "description": "شوت من الاسبريسو وصلصة الموكا البيضاء المخفوقة على الثلج والقليل من الحليب المحلى",
+    "price": "18.0 ر.س",
+    "calories": "276 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menuitem/image/7780328?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "آيس شيكن فانيلا",
+    "description": "إسبريسو مخفوق بالثلج والحليب ليجعله أكثر برودة ورغوة",
+    "price": "18.0 ر.س",
+    "calories": "240 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menus/menuitem/hsimg-1484545?width=1440&quality=75&webp=true"
+  },
+  {
+    "title": "آيس شيكن كاراميل",
+    "description": "شوت من الاسبريسو وصلصة الكراميل المخفوقة على الثلج ولمسة من الحليب المحلى",
+    "price": "18.0 ر.س",
+    "calories": "277 سعرة حرارية",
+    "image_url": "https://images.deliveryhero.io/image/hungerstation/menus/menuitem/hsimg-1484545?width=1440&quality=75&webp=true"
+  }
+]

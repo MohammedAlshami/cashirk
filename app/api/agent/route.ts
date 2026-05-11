@@ -3,7 +3,12 @@ import { ElevenLabsClient, ElevenLabsError } from "@elevenlabs/elevenlabs-js";
 import { Llm } from "@elevenlabs/elevenlabs-js/dist/api/types/Llm";
 import type { ObjectJsonSchemaPropertyInput } from "@elevenlabs/elevenlabs-js/dist/api/types/ObjectJsonSchemaPropertyInput";
 import { ClientEvent } from "@elevenlabs/elevenlabs-js/api/types/ClientEvent";
-import { AGENT_SYSTEM_PROMPT_AR } from "@/lib/demo-menu";
+import type { KnowledgeBaseLocator } from "@elevenlabs/elevenlabs-js/api/types/KnowledgeBaseLocator";
+import {
+  AGENT_FIRST_MESSAGE_AR,
+  buildAgentSystemPromptAr,
+  buildMenuKnowledgeJson,
+} from "@/lib/demo-menu";
 
 function requireApiKey(): string | null {
   const key = process.env.ELEVENLABS_API_KEY;
@@ -49,6 +54,18 @@ function buildAddMenuItemToolConfig() {
     parameters,
   };
 }
+
+function buildKnowledgeBaseText() {
+  return buildMenuKnowledgeJson();
+}
+
+const MENU_KNOWLEDGE_BASE: KnowledgeBaseLocator[] = [
+  {
+    type: "text",
+    name: "Drive-thru menu",
+    id: "r0iYJ4BmLDpj2YgUzhnO",
+  } as KnowledgeBaseLocator,
+];
 
 function buildPreaddMenuItemToolConfig() {
   const parameters: ObjectJsonSchemaPropertyInput = {
@@ -133,12 +150,13 @@ export async function POST() {
       enableVersioning: true,
       conversationConfig: {
         agent: {
-          firstMessage: "مرحباً، معك موظف الطلبات. كيف يمكنني مساعدتك اليوم؟",
+          firstMessage: AGENT_FIRST_MESSAGE_AR,
           language: "ar",
           prompt: {
-            prompt: AGENT_SYSTEM_PROMPT_AR,
+            prompt: buildAgentSystemPromptAr(),
             llm: Llm.Gpt4O,
             temperature: 0.15,
+            knowledgeBase: MENU_KNOWLEDGE_BASE,
           },
         },
         conversation: {
@@ -198,6 +216,15 @@ export async function PATCH(request: Request) {
     const preaddTool = tools.tools.find(
       (tool) => tool.toolConfig.type === "client" && tool.toolConfig.name === "preadd_menu_item",
     );
+    const completeOrderTool = tools.tools.find(
+      (tool) => tool.toolConfig.type === "client" && tool.toolConfig.name === "complete_order",
+    );
+    const clearOrderTool = tools.tools.find(
+      (tool) => tool.toolConfig.type === "client" && tool.toolConfig.name === "clear_order",
+    );
+    const menuContextTool = tools.tools.find(
+      (tool) => tool.toolConfig.type === "client" && tool.toolConfig.name === "get_menu_context",
+    );
 
     if (addTool) {
       await client().conversationalAi.tools.update(addTool.id, {
@@ -228,6 +255,9 @@ export async function PATCH(request: Request) {
 
     if (addTool) existingToolIds.add(addTool.id);
     if (preaddToolId) existingToolIds.add(preaddToolId);
+    if (completeOrderTool) existingToolIds.add(completeOrderTool.id);
+    if (clearOrderTool) existingToolIds.add(clearOrderTool.id);
+    if (menuContextTool) existingToolIds.add(menuContextTool.id);
 
     const nextToolIds = Array.from(existingToolIds);
 
@@ -236,13 +266,14 @@ export async function PATCH(request: Request) {
         ...agent.conversationConfig,
         agent: {
           ...agent.conversationConfig.agent,
-          firstMessage: "مرحباً، معك موظف الطلبات. كيف يمكنني مساعدتك اليوم؟",
+          firstMessage: AGENT_FIRST_MESSAGE_AR,
           language: "ar",
           prompt: {
-            prompt: AGENT_SYSTEM_PROMPT_AR,
+            prompt: buildAgentSystemPromptAr(),
             llm: Llm.Gpt4O,
             temperature: 0.15,
             toolIds: nextToolIds,
+            knowledgeBase: MENU_KNOWLEDGE_BASE,
           },
         },
         conversation: {

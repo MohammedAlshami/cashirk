@@ -283,11 +283,12 @@ function DriveThruDemoPageInner({
   conversationTokenPath: string;
 }) {
   const [showPayment, setShowPayment] = React.useState(false);
-  const prevFinalized = React.useRef(false);
+  const prevStatus = React.useRef<string>("idle");
 
   const {
     agentState,
     handleOrbClick,
+    resetSession,
     status,
     getInputVolume,
     getOutputVolume,
@@ -297,13 +298,17 @@ function DriveThruDemoPageInner({
     orderFinalized,
   } = useDriveThruVoiceDemo(agentId, conversationTokenPath);
 
-  // Show payment modal as soon as order is finalized
+  // Show payment modal when:
+  // 1. The agent explicitly calls complete_order (orderFinalized flips true while connected), OR
+  // 2. The call disconnects for any reason and there are items in the order.
   React.useEffect(() => {
-    if (orderFinalized && !prevFinalized.current && orderItems.length > 0) {
+    const justDisconnected =
+      prevStatus.current === "connected" && status !== "connected";
+    if ((orderFinalized || justDisconnected) && orderItems.length > 0) {
       setShowPayment(true);
     }
-    prevFinalized.current = orderFinalized;
-  }, [orderFinalized, orderItems.length]);
+    prevStatus.current = status;
+  }, [orderFinalized, status, orderItems.length]);
 
   const currentLine = orderItems[orderItems.length - 1] ?? previewLine;
   const sheetVisible = Boolean(currentLine) && !showPayment;
@@ -376,7 +381,10 @@ function DriveThruDemoPageInner({
           <PaymentModal
             orderItems={orderItems}
             orderTotal={orderTotal}
-            onClose={() => setShowPayment(false)}
+            onClose={async () => {
+              setShowPayment(false);
+              await resetSession();
+            }}
           />
         )}
       </AnimatePresence>

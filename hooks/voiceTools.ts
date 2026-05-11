@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import {
   DEMO_MENU,
+  findMenuItemByText,
   formatModifiersAr,
   type MenuModifierHints,
   type OrderLine,
@@ -29,16 +30,7 @@ function resolveMenuItem(params: Record<string, unknown>) {
   }
 
   if (rawName) {
-    const normalized = normalizeText(rawName);
-
-    return (
-      DEMO_MENU.find((item) => normalizeText(item.name) === normalized) ||
-      DEMO_MENU.find(
-        (item) =>
-          normalizeText(item.name).includes(normalized) ||
-          normalized.includes(normalizeText(item.name)),
-      )
-    );
+    return findMenuItemByText(rawName);
   }
 
   return null;
@@ -55,7 +47,8 @@ function buildOrderLine(params: Record<string, unknown>): OrderLine | null {
   return {
     lineKey: `${item.id}|${modifiersLabel}`,
     itemId: item.id,
-    name: modifiersLabel === "???? ????? ?????" ? item.name : `${item.name} (${modifiersLabel})`,
+    name:
+      modifiersLabel === "بدون تخصيص إضافي" ? item.name : `${item.name} (${modifiersLabel})`,
     qty,
     price: item.price,
     imageSrc: item.imageSrc,

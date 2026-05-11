@@ -1,0 +1,510 @@
+{
+  "agentId": "agent_3001kr5gzqhtecyr7szr6evpk5g8",
+  "name": "cashier",
+  "conversationConfig": {
+    "asr": {
+      "quality": "high",
+      "provider": "scribe_realtime",
+      "userInputAudioFormat": "pcm_16000",
+      "keywords": []
+    },
+    "turn": {
+      "turnTimeout": 7,
+      "silenceEndCallTimeout": -1,
+      "softTimeoutConfig": {
+        "timeoutSeconds": -1,
+        "message": "Hhmmmm...yeah.",
+        "useLlmGeneratedMessage": false
+      },
+      "mode": "turn",
+      "turnEagerness": "normal",
+      "spellingPatience": "auto",
+      "speculativeTurn": true,
+      "retranscribeOnTurnTimeout": false,
+      "turn_model": "turn_v2",
+      "interruption_ignore_terms": []
+    },
+    "tts": {
+      "modelId": "eleven_v3_conversational",
+      "voiceId": "t9akNmCDhz230CEXOYmn",
+      "supportedVoices": [],
+      "expressiveMode": true,
+      "suggestedAudioTags": [
+        {
+          "tag": "Chuckles",
+          "description": ""
+        },
+        {
+          "tag": "Warmly",
+          "description": ""
+        }
+      ],
+      "agentOutputAudioFormat": "pcm_48000",
+      "optimizeStreamingLatency": 3,
+      "stability": 0.5,
+      "speed": 1.01,
+      "similarityBoost": 0.8,
+      "textNormalisationType": "system_prompt",
+      "pronunciationDictionaryLocators": []
+    },
+    "conversation": {
+      "textOnly": false,
+      "maxDurationSeconds": 600,
+      "clientEvents": [
+        "audio",
+        "interruption",
+        "user_transcript",
+        "tentative_user_transcript",
+        "agent_response",
+        "internal_tentative_agent_response",
+        "agent_chat_response_part",
+        "agent_tool_request",
+        "agent_tool_response"
+      ],
+      "fileInput": {
+        "enabled": true,
+        "maxFilesPerConversation": 10
+      },
+      "monitoringEnabled": false,
+      "monitoringEvents": [
+        "user_transcript",
+        "agent_response",
+        "agent_response_correction"
+      ],
+      "dtmf_input_settings": null,
+      "background_music": {
+        "source_type": null,
+        "source_id": null,
+        "volume": 0.6,
+        "crossfade_loop": false
+      },
+      "sourceAttribution": true
+    },
+    "languagePresets": {},
+    "vad": {
+      "background_voice_detection": false
+    },
+    "agent": {
+      "firstMessage": "مرحباً، معك موظف الطلبات. كيف يمكنني مساعدتك اليوم؟",
+      "language": "ar",
+      "hinglishMode": false,
+      "dynamicVariables": {
+        "dynamicVariablePlaceholders": {}
+      },
+      "disableFirstMessageInterruptions": false,
+      "maxConversationDurationMessage": "",
+      "prompt": {
+        "prompt": "أنت موظف طلبات صوتي لمقهى في مسار السيارات (درايف ثرو).\n\nالقواعد:\n1) استخدم فقط عناصر القائمة المعروفة في سياق القائمة (JSON). لا تخلق منتجات أو أسعاراً.\n2) اسأل فقط عن السكر إذا لم يذكره العميل بوضوح وكان الصنف يدعم تخصيص السكر. لا تسأل عن الثلج أو الحرارة.\n3) إذا لم يذكر العميل الكمية بوضوح، اسأل عن الكمية.\n4) عندما يذكر العميل طلباً مفهوماً من القائمة، لا تكتفِ بالرد النصي. نفّذ أداة العميل add_menu_item مباشرة إذا كان item_id والكمية والسكر متوفرين. إذا كان السكر أو الكمية غير واضحين، اسأل فقط عن الناقص ثم نفّذ الأداة فوراً بعد الحصول عليه.\n5) عندما تتعرّف على الصنف لأول مرة، استدعِ preadd_menu_item فوراً وبمفردها لفتح البطاقة. لا تنتظر الكمية أو السكر قبل استدعائها.\n6) عندما يؤكد العميل أن الطلب نهائي أو يطلب الإنهاء، استخدم complete_order فوراً لإنهاء الطلب وإغلاق الجلسة بعد توديع قصير جداً.\n7) عبارات الإنهاء تشمل على الأقل: \"بس\"، \"خلاص\"، \"لا شكراً\"، \"تسلم\"، \"just now\"، \"no that's all\"، \"that's all\"، \"we're done\".\n8) إذا قال العميل أي صيغة لإنهاء الطلب، لا تطرح سؤالاً إضافياً. نفّذ complete_order مباشرة.\n9) تحدث العربية الفصحى المبسطة والودودة ما لم يطلب العميل غير ذلك.\n10) لا تؤكد إضافة الأصناف نصياً قبل استدعاء add_menu_item. أداة العميل هي مصدر الحقيقة للطلب.\n11) لا تكتب كوداً أو أوامر وهمية أو أسماء دوال مثل default_api.add_menu_item أو print(...). استدعِ أداة العميل فعلياً فقط.\n12) إذا كنت تعرف item_id والكمية والسكر، فاستدعِ add_menu_item فوراً ولا تسأل سؤالاً إضافياً.\n13) لا تذكر اسم الأداة داخل النص الظاهر للمستخدم؛ نفّذها بصمت عبر المنصة.\n\nاستخدم فقط عناصر القائمة التالية مع معرّفها:\n\n- item-01 | اسبريسو - سنقل | 11.0 ر.س ????\n- item-02 | ماكياتو - صغير | 12.0 ر.س ????\n- item-03 | ماكياتو بالشوكولاتة المره - وسط | 15.0 ر.س ????\n- item-04 | ماكياتو بالشوكولاتة المره - كبير | 18.0 ر.س ????\n- item-05 | ماكياتو بالتوفي - وسط | 15.0 ر.س ????\n- item-06 | ماكياتو بالتوفي - كبير | 18.0 ر.س ????\n- item-07 | فلات وايت - وسط | 13.0 ر.س ????\n- item-08 | فلات وايت - كبير | 16.0 ر.س ????\n- item-09 | موكا - سنقل | 15.0 ر.س ????\n- item-10 | موكا - دبل | 18.0 ر.س ????\n- item-11 | لاتيه - وسط | 13.0 ر.س ????\n- item-12 | لاتيه - كبير | 16.0 ر.س ????\n- item-13 | كورتادو - سنقل | 12.0 ر.س ????\n- item-14 | كورتادو - دبل | 14.0 ر.س ????\n- item-15 | قهوة تركي - سنقل | 12.0 ر.س ????\n- item-16 | قهوة تركي - دبل | 14.0 ر.س ????\n- item-17 | امريكانو | 14.0 ر.س ????\n- item-18 | قهوة امريكي | 15.0 ر.س ????\n- item-19 | قهوة فرنسي | 17.0 ر.س ????\n- item-20 | شوكولاتة ساخنة | 16.0 ر.س ????\n- item-21 | قهوة تركي مع حليب - دبل | 15.0 ر.س ????\n- item-22 | قهوة تركي مع حليب - سنقل | 13.0 ر.س ????\n- item-23 | اسبريسو - دبل | 14.0 ر.س ????\n- item-24 | ماكياتو - كبير | 14.0 ر.س ????\n- item-25 | شيزكيك البسبوسة باللوتس | 20.0 ر.س ????\n- item-26 | براوني شوكولاتة دبي | 20.0 ر.س ????\n- item-27 | موكا بالشوكولاته - موكا بالشوكولاته-وسط | 22.0 ر.س ????\n- item-28 | موكا بالشوكولاته - كبير | 18.0 ر.س ????\n- item-29 | قهوة كولد برو قارورة | 19.0 ر.س ????\n- item-30 | قهوة مثلجة - كبير | 19.0 ر.س ????\n- item-31 | ١٦ - صغير | 17.0 ر.س ????\n- item-32 | ايس سبانيش لاتيه - كبير | 18.0 ر.س ????\n- item-33 | شوكلت فرابتشينو - كبير | 21.0 ر.س ????\n- item-34 | لاتيه بارد | 16.0 ر.س ????\n- item-35 | فانيلا مثلجة - صغير | 18.0 ر.س ????\n- item-36 | ميلك شيك تمر | 22.0 ر.س ????\n- item-37 | مياه معدنية | 2.0 ر.س ????\n- item-38 | آيس شيكن وايت موكا | 18.0 ر.س ????\n- item-39 | آيس شيكن فانيلا | 18.0 ر.س ????\n- item-40 | آيس شيكن كاراميل | 18.0 ر.س ????\n",
+        "llm": "gpt-4o",
+        "temperature": 0.15,
+        "maxTokens": -1,
+        "toolIds": [
+          "tool_9301kr5j8wdhergrsdfk4ba3ama7",
+          "tool_9901kr5j8wxcfg2ap8ykj8qpjm3g",
+          "tool_4001kr5j8xdvfvq9gz7gxzrmkf41",
+          "tool_3401kr5j8xxrf6mbxxmwb9tgmscz",
+          "tool_9301kr71n1g3fd2vrbf3nxprp3m4"
+        ],
+        "builtInTools": {
+          "update_state": null,
+          "memory_entry_search": null,
+          "memory_entry_create": null,
+          "memory_entry_update": null,
+          "memory_entry_delete": null,
+          "agent_prompt_change": null,
+          "procedure_update": null,
+          "transfer_to_genesys_chat": null
+        },
+        "enable_parallel_tool_calls": false,
+        "mcpServerIds": [],
+        "nativeMcpServerIds": [],
+        "knowledgeBase": [
+          {
+            "type": "text",
+            "name": "Drive-thru menu",
+            "id": "r0iYJ4BmLDpj2YgUzhnO",
+            "usageMode": "auto"
+          }
+        ],
+        "speech_engine": null,
+        "ignoreDefaultPersonality": false,
+        "rag": {
+          "enabled": false,
+          "embeddingModel": "e5_mistral_7b_instruct",
+          "optional_rag_enabled": false,
+          "maxVectorDistance": 0.6,
+          "maxDocumentsLength": 50000,
+          "maxRetrievedRagChunksCount": 20
+        },
+        "timezone": "Asia/Kuala_Lumpur",
+        "backupLlmConfig": {
+          "preference": "default"
+        },
+        "cascadeTimeoutSeconds": 8,
+        "tools": [
+          {
+            "type": "client",
+            "name": "get_menu_context",
+            "description": "إرجاع القائمة الحالية والطلب الحالي للاطلاع السريع قبل المتابعة.",
+            "responseTimeoutSecs": 10,
+            "disableInterruptions": false,
+            "forcePreToolSpeech": false,
+            "preToolSpeech": "auto",
+            "assignments": [],
+            "toolCallSoundBehavior": "auto",
+            "toolErrorHandlingMode": "auto",
+            "expectsResponse": true,
+            "dynamicVariables": {
+              "dynamicVariablePlaceholders": {}
+            },
+            "executionMode": "immediate"
+          },
+          {
+            "type": "client",
+            "name": "add_menu_item",
+            "description": "Add one menu item to the current order. Use item_id, quantity, sugar, and optional notes. Do not ask about ice or temperature. Call this tool immediately once the item, quantity, and sugar are known.",
+            "responseTimeoutSecs": 20,
+            "disableInterruptions": false,
+            "forcePreToolSpeech": false,
+            "preToolSpeech": "auto",
+            "assignments": [],
+            "toolCallSoundBehavior": "auto",
+            "toolErrorHandlingMode": "auto",
+            "parameters": {
+              "type": "object",
+              "required": [
+                "item_id",
+                "quantity"
+              ],
+              "description": "",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "description": "Menu item ID from the knowledge base.",
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                },
+                "quantity": {
+                  "type": "integer",
+                  "description": "Quantity to add.",
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                },
+                "sugar": {
+                  "type": "string",
+                  "description": "Sugar level only.",
+                  "enum": [
+                    "none",
+                    "less",
+                    "regular"
+                  ],
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Optional special instructions.",
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                }
+              }
+            },
+            "expectsResponse": false,
+            "dynamicVariables": {
+              "dynamicVariablePlaceholders": {}
+            },
+            "executionMode": "immediate"
+          },
+          {
+            "type": "client",
+            "name": "clear_order",
+            "description": "تفريغ الطلب الحالي عند رغبة العميل في البدء من جديد.",
+            "responseTimeoutSecs": 10,
+            "disableInterruptions": false,
+            "forcePreToolSpeech": false,
+            "preToolSpeech": "auto",
+            "assignments": [],
+            "toolCallSoundBehavior": "auto",
+            "toolErrorHandlingMode": "auto",
+            "expectsResponse": true,
+            "dynamicVariables": {
+              "dynamicVariablePlaceholders": {}
+            },
+            "executionMode": "immediate"
+          },
+          {
+            "type": "client",
+            "name": "complete_order",
+            "description": "إنهاء الطلب وإغلاق الجلسة بعد أن يؤكد العميل أن الطلب نهائي.",
+            "responseTimeoutSecs": 10,
+            "disableInterruptions": true,
+            "forcePreToolSpeech": false,
+            "preToolSpeech": "auto",
+            "assignments": [],
+            "toolCallSoundBehavior": "auto",
+            "toolErrorHandlingMode": "auto",
+            "expectsResponse": true,
+            "dynamicVariables": {
+              "dynamicVariablePlaceholders": {}
+            },
+            "executionMode": "immediate"
+          },
+          {
+            "type": "client",
+            "name": "preadd_menu_item",
+            "description": "Preview a menu item as soon as it is recognized so the UI sheet opens before the order is finalized. Call this immediately when you identify the item name. Only item_id is required.",
+            "responseTimeoutSecs": 20,
+            "disableInterruptions": false,
+            "forcePreToolSpeech": false,
+            "preToolSpeech": "auto",
+            "assignments": [],
+            "toolCallSoundBehavior": "auto",
+            "toolErrorHandlingMode": "auto",
+            "parameters": {
+              "type": "object",
+              "required": [
+                "item_id"
+              ],
+              "description": "",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "description": "Menu item ID from the knowledge base.",
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Optional special instructions.",
+                  "isSystemProvided": false,
+                  "dynamicVariable": "",
+                  "constantValue": ""
+                }
+              }
+            },
+            "expectsResponse": false,
+            "dynamicVariables": {
+              "dynamicVariablePlaceholders": {}
+            },
+            "executionMode": "immediate"
+          }
+        ]
+      }
+    }
+  },
+  "metadata": {
+    "createdAtUnixSecs": 1778302050,
+    "updatedAtUnixSecs": 1778512588
+  },
+  "platformSettings": {
+    "evaluation": {
+      "criteria": []
+    },
+    "widget": {
+      "variant": "full",
+      "placement": "bottom-right",
+      "expandable": "never",
+      "avatar": {
+        "type": "orb",
+        "color1": "#2792dc",
+        "color2": "#9ce6e6"
+      },
+      "feedbackMode": "during",
+      "endFeedback": {
+        "type": "rating"
+      },
+      "bgColor": "#ffffff",
+      "textColor": "#000000",
+      "btnColor": "#000000",
+      "btnTextColor": "#ffffff",
+      "borderColor": "#e1e1e1",
+      "focusColor": "#000000",
+      "shareablePageShowTerms": true,
+      "termsText": "#### Terms and conditions\n\nBy clicking \"Agree,\" and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as described in the Privacy Policy.\nIf you do not wish to have your conversations recorded, please refrain from using this service.",
+      "termsHtml": "<h4>Terms and conditions</h4>\n<p>By clicking &quot;Agree,&quot; and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as described in the Privacy Policy.\nIf you do not wish to have your conversations recorded, please refrain from using this service.</p>\n",
+      "showAvatarWhenCollapsed": false,
+      "disableBanner": false,
+      "markdownLinkAllowedHosts": [],
+      "markdownLinkIncludeWww": true,
+      "markdownLinkAllowHttp": true,
+      "micMutingEnabled": false,
+      "transcriptEnabled": false,
+      "textInputEnabled": true,
+      "conversationModeToggleEnabled": false,
+      "defaultExpanded": false,
+      "alwaysExpanded": false,
+      "dismissible": false,
+      "showAgentStatus": false,
+      "showConversationId": true,
+      "stripAudioTags": true,
+      "textContents": {},
+      "styles": {},
+      "languageSelector": false,
+      "supportsTextOnly": true,
+      "languagePresets": {}
+    },
+    "dataCollection": {},
+    "dataCollectionScopes": {},
+    "overrides": {
+      "conversationConfigOverride": {
+        "turn": {
+          "softTimeoutConfig": {
+            "message": false
+          }
+        },
+        "tts": {
+          "voiceId": false,
+          "stability": false,
+          "speed": false,
+          "similarityBoost": false
+        },
+        "conversation": {
+          "textOnly": true
+        },
+        "agent": {
+          "firstMessage": false,
+          "language": false,
+          "maxConversationDurationMessage": false,
+          "prompt": {
+            "prompt": false,
+            "llm": false,
+            "toolIds": false,
+            "nativeMcpServerIds": false,
+            "knowledgeBase": false
+          }
+        }
+      },
+      "customLlmExtraBody": false,
+      "enableConversationInitiationClientDataFromWebhook": false,
+      "enableStartingWorkflowNodeIdFromClient": false
+    },
+    "workspaceOverrides": {
+      "webhooks": {
+        "events": [
+          "transcript"
+        ],
+        "transcriptFormat": "json",
+        "sendAudio": false
+      }
+    },
+    "testing": {
+      "attachedTests": [],
+      "referenced_tests_ids": []
+    },
+    "archived": false,
+    "guardrails": {
+      "version": "1",
+      "focus": {
+        "isEnabled": false
+      },
+      "promptInjection": {
+        "isEnabled": false
+      },
+      "content": {
+        "executionMode": "streaming",
+        "config": {
+          "sexual": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "violence": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "harassment": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "selfHarm": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "profanity": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "religionOrPolitics": {
+            "isEnabled": false,
+            "threshold": "medium"
+          },
+          "medicalAndLegalInformation": {
+            "isEnabled": false,
+            "threshold": "medium"
+          }
+        },
+        "triggerAction": {
+          "type": "end_call"
+        }
+      },
+      "moderation": null,
+      "custom": {
+        "config": {
+          "configs": []
+        }
+      }
+    },
+    "auth": {
+      "enableAuth": false,
+      "allowlist": [],
+      "requireOriginHeader": false
+    },
+    "callLimits": {
+      "agentConcurrencyLimit": -1,
+      "dailyLimit": 100000,
+      "burstingEnabled": true
+    },
+    "ban": null,
+    "smb_metadata": null,
+    "privacy": {
+      "recordVoice": true,
+      "retentionDays": -1,
+      "deleteTranscriptAndPii": false,
+      "deleteAudio": false,
+      "applyToExistingConversations": false,
+      "zeroRetentionMode": false,
+      "conversationHistoryRedaction": {
+        "enabled": false,
+        "entities": []
+      }
+    },
+    "trustContext": "unknown",
+    "analysisLlm": "gemini-2.5-flash",
+    "safety": {
+      "isBlockedIvc": false,
+      "isBlockedNonIvc": false,
+      "ignoreSafetyEvaluation": false
+    }
+  },
+  "phoneNumbers": [],
+  "whatsappAccounts": [],
+  "workflow": {
+    "edges": {},
+    "nodes": {
+      "start_node": {
+        "type": "start",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "edgeOrder": []
+      }
+    },
+    "preventSubagentLoops": false
+  },
+  "tags": [],
+  "versionId": "agtvrsn_4601krbsrvc0fydt4w1166g79dws",
+  "branchId": "agtbrch_7401kr5gzrh7ea380g1r7mrdgw5z",
+  "mainBranchId": "agtbrch_7401kr5gzrh7ea380g1r7mrdgw5z",
+  "coaching_settings": null,
+  "procedures": {},
+  "procedures_enabled": false,
+  "procedure_settings": {
+    "compiler_mode": "append"
+  },
+  "trust_context": "unknown"
+}
