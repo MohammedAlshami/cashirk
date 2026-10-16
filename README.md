@@ -1,38 +1,47 @@
-# Real-Time Voice Agent (Next.js)
+# Cashirk — Real-Time Voice Agent in the Browser
 
-Live voice conversations with the ElevenLabs Agents Platform using the [React Agents SDK](https://elevenlabs.io/docs/eleven-agents/libraries/react).
+A small Next.js app that lets you **create and talk to a voice agent** in the browser using
+the **ElevenLabs Agents** platform. Pick a name and a system prompt, the server creates
+the agent and issues a short-lived token, and the conversation runs over WebRTC with a
+live transcript and speaking/listening state.
 
-## Setup
+Built for UMHackathon-style demos — no telephony code required.
 
-1. Copy the environment file and add your credentials:
+## Features
 
-   ```bash
-   cp .env.example .env
-   ```
+- Provision a voice agent from a name + system prompt
+- Live browser conversations (WebRTC, low latency)
+- Short-lived tokens issued by the server
+- Live transcript + on-screen listening/speaking state
+- 3D visual (Three.js) for the agent
+- Built on the ElevenLabs Agents platform
 
-   Then edit `.env` and set:
-   - `ELEVENLABS_API_KEY`
+## Tech stack
 
-2. Install dependencies:
+- **Frontend:** Next.js, React 18, TypeScript, Tailwind, Three.js
+- **Runtime:** Cloudflare Workers + OpenNext
+- **Voice:** ElevenLabs Agents, WebRTC
 
-   ```bash
-   pnpm install
-   ```
-
-## Run
+## Getting started
 
 ```bash
-pnpm run dev
+npm install
+npm run dev   # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Set environment variables (e.g. in `.env.local`) before running:
 
-## Usage
+```ini
+ELEVENLABS_API_KEY=
+```
 
-- Enter an agent name and a system prompt, then click **Create agent**.
-- The app creates the agent server-side and stores the returned agent id in the page.
-- Click **Start** and allow microphone access when prompted.
-- The app fetches a fresh conversation token for the created agent and starts a WebRTC session.
-- Speak naturally and watch the live conversation state update as the agent listens and responds.
-- The page shows whether the agent is currently speaking and renders the interaction as a running conversation.
-- Click **Stop** to end the session.
+Inspect agent config with:
+
+```bash
+# (sscript removed from repo; copy agent id from config if needed)
+```
+
+## Notes
+
+- Bring your own ElevenLabs API key (free tier keys work for dev).
+- No secrets are tracked in Git.

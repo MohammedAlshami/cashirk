@@ -1,29 +1,8 @@
-node_modules
-package-lock.json
-yarn.lock
-
-.DS_Store
-.cache
+node_modules/
+.next/
+.open-next/
+dist/
+venv/
+__pycache__/
 .env
 .env.local
-.dev.vars
-.vercel
-.output
-/build/
-/api/
-/server/build
-/public/build# Sentry Config File
-.env.sentry-build-plugin
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-.tanstack
-.next
-# OpenNext
-.open-next
-
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
